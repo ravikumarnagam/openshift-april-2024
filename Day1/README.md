@@ -1,5 +1,10 @@
 # Day 1
 
+## Troubleshooting RPS Cloud Login
+```
+The user-id that was shared to you misses letter 'u', so you need to type your username as 24MAN0113-u25.  The two digit number would vary for each participant.
+```
+
 ## Pre-test - kindly complete the pre-test from your RPS Lab machine
 <pre>
 https://app.mymapit.in/code4/tiny/8Y8cj9
