@@ -609,3 +609,18 @@ Now using project "default" on server "https://api.ocp4.tektutor.org.labs:6443".
 [jegan@tektutor.org ~]$ oc project jegan
 Now using project "jegan" on server "https://api.ocp4.tektutor.org.labs:6443".  
 </pre>
+
+## Lab - Deleting a project
+```
+oc get projects | grep jegan
+oc delete project/jegan
+oc get projects | grep jegan
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org ~]$ oc delete project/jegan
+project.project.openshift.io "jegan" deleted
+[jegan@tektutor.org ~]$ oc get projects | grep jegan
+[jegan@tektutor.org ~]$ 
+</pre>
