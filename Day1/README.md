@@ -592,3 +592,20 @@ Expected output
 [jegan@tektutor.org ~]$ oc project
 Using project "jegan" on server "https://api.ocp4.tektutor.org.labs:6443".  
 </pre>
+
+## Lab - Switching between projects
+```
+oc project
+oc project default
+oc project jegan
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org ~]$ oc project
+Using project "jegan" on server "https://api.ocp4.tektutor.org.labs:6443".
+[jegan@tektutor.org ~]$ oc project default
+Now using project "default" on server "https://api.ocp4.tektutor.org.labs:6443".
+[jegan@tektutor.org ~]$ oc project jegan
+Now using project "jegan" on server "https://api.ocp4.tektutor.org.labs:6443".  
+</pre>
