@@ -82,3 +82,27 @@ master-3.ocp4.tektutor.org.labs   Ready    control-plane,master,worker   5h35m  
 worker-1.ocp4.tektutor.org.labs   Ready    worker                        5h18m   v1.27.11+749fe1d
 worker-2.ocp4.tektutor.org.labs   Ready    worker                        5h18m   v1.27.11+749fe1d  
 </pre>
+
+## Hypervisor ( software + hardware )
+- refers to virtualization technology
+- through virtualization, we can run many OS side by side on the same physical machine(laptop/desktop/workstation/server)
+- in other words, many OS can be active at the same time within a single machine
+- Processor on your laptop/desktop/workstation/server should support virtualization
+  - Intel (VT-X - Virtualization Feature)
+  - AMD (AMD-V - Virtualization Feature)
+- there are two types of Hypervisors available
+  - Type 1 ( Used in Servers/Workstations - Bare-metal - don't need OS )
+  - Type 2 ( Used in laptop/desktops - can be installed only top of a OS [Windows,Linux,Mac] )
+- Examples
+  - Type 1 Baremetal Hypervisors
+    - VMWare vSpere/vCenter
+  - Type 2 Hypervisors
+    - VMWare Workstation (Linux,Windows)
+    - VMWare Fusion (Mac OS-X)
+    - Oracle VirtualBox
+    - Microsoft Hyper-V
+    - Parallels ( Mac OS-X)
+    - KVM (Linux)
+## Container Overview
+
+
