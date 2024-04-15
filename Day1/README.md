@@ -6,6 +6,20 @@
 - The last two digit number in the username would vary for each participant.
 ```
 
+## About our lab environment
+
+There are total 3 linux servers
+```
+Server 1 - 10.10.15.60 (user01 - user09)
+Server 2 - 10.10.15.63 (user10 - user17)
+Server 3 - 10.10.15.64 (user18 - user25)
+```
+
+The linux login credentials ( RDP Connection link that you see on the RPS Windows cloud machine )
+In case your cloud login username is 24MAN0113-u25, then you should login as user25 with password redhat to the Server 3 (10.10.15.64).
+In case you cloud login username 24MAN0113-u15, then you should login as user15 with password 'redhat' to the server 2 (10.10.15.63).
+
+
 ## Pre-test - kindly complete the pre-test from your RPS Lab machine
 <pre>
 https://app.mymapit.in/code4/tiny/8Y8cj9
