@@ -253,7 +253,10 @@ What is the minimum number of physical servers required to support 1000 Virtual 
     - Endpoint Controller
     - StatefulSet Controller
     - Daemonset Controller
-
+- In Openshift, the OS installed in master node is Red Hat Enterprise Linux Core OS (RHCOS)
+- In OpenShift, the worker nodes supports either Red Hat Enterprise Linux (RHEL) or RHCOS
+- It is recommended to install RHCOS on all nodes, as this supports upgrading the OS through oc commands
+  
 ## API Server
 - a collection of many REST APIs
 - for every features supported by Openshift there is a bunch REST APIs
