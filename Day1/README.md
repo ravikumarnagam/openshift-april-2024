@@ -613,6 +613,7 @@ Now using project "jegan" on server "https://api.ocp4.tektutor.org.labs:6443".
 ## Lab - Deleting a project
 When we delete a project, all the resources created within the project will be automatically deleted.
 
+Replace 'jegan' with your name
 ```
 oc get projects | grep jegan
 oc delete project/jegan
@@ -629,6 +630,8 @@ project.project.openshift.io "jegan" deleted
 
 
 ## Lab - Creating a new-project and deploying an application
+Replace 'jegan' with your name
+
 ```
 oc new-project jegan
 oc create deploy nginx --image=nginx:latest
