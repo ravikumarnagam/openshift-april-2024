@@ -83,9 +83,30 @@ worker-1.ocp4.tektutor.org.labs   Ready    worker                        5h18m  
 worker-2.ocp4.tektutor.org.labs   Ready    worker                        5h18m   v1.27.11+749fe1d  
 </pre>
 
+## Processors
+- AMD/Intel they support multiple CPU cores in a single Processor
+- These days, processors comes in different packaging
+  - SCM (Single Chip Module) - one IC will host one Processor
+  - MCM (Multiple chip Module) - one IC will host many Processors
+- It is possible a single IC may support 2/4/8 Processors
+- Server grade motherboards generally support many Processor Sockets
+- Assume a server with 4 Sockets, each Socket is installed with a MCM Processor ( 4 Processor/socket) - a total of 16 Processors
+- assume each Processor supports 128 Cores
+- 16 x 128 = 2048 Physical CPU Cores
+- 2048 x 2 = 4096 virtual/logical CPU Cores ( 1 Server )
+- 1 Server can technically host 1000 virtual machines(Operating system)
+- this kind of virtualization is called heavy-weight virtualization
+  - because for each VM, we need to allocate dedicated hardware resources
+    - CPU Cores
+    - RAM
+    - Disk/Storage 
+Hyperthreading
+- each physical cpu cores is seen as 2/4 virtual cores
+
 ## Hypervisor ( software + hardware )
 - refers to virtualization technology
 - through virtualization, we can run many OS side by side on the same physical machine(laptop/desktop/workstation/server)
+- each Virtual machines refers to one fully functional operating system
 - in other words, many OS can be active at the same time within a single machine
 - Processor on your laptop/desktop/workstation/server should support virtualization
   - Intel (VT-X - Virtualization Feature)
@@ -103,6 +124,19 @@ worker-2.ocp4.tektutor.org.labs   Ready    worker                        5h18m  
     - Microsoft Hyper-V
     - Parallels ( Mac OS-X)
     - KVM (Linux)
+
+What is the minimum number of physical servers required to support 1000 Virtual Machine(VM - OS)?
+
+
 ## Container Overview
-
-
+- an application virtualization technology
+- each container represents one single application or application process
+- container will host the application and its dependent libraries/software utilities, etc
+- containers - there are similarities with virtual machines
+  - just like virtual machines has shell, even a container may have its own shell like bash/sh,etc.,
+  - just like virtual machines has their own network stack, containers also has their own network stack
+  - just like virtual machines has atleast one IP address, containers also get atleast one IP address
+  - just like virtual machine has its own file system, containers also has their own files system(files/folders)
+- containers that runs in the same machines shares the hardware resources on the underlying operating system
+- containers don't represent a OS, containers don't have their own hardware or OS kernel
+- containers depends on the underlying os kernel for any OS functionality
