@@ -814,3 +814,46 @@ nginx 10:35:46.71 INFO  ==> ** NGINX setup finished! **
 
 nginx 10:35:46.72 INFO  ==> ** Starting NGINX **  
 </pre>
+
+
+## Lab - Scale up/down a deployment pods instances
+```
+oc get po
+oc scale deploy/nginx --replicas=5
+oc get po -w
+oc scale deploy/nginx --replicas=3
+oc get po
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org ~]$ oc get po
+NAME                    READY   STATUS    RESTARTS   AGE
+nginx-94c4bd68b-6twtd   1/1     Running   0          3m53s
+nginx-94c4bd68b-grp6p   1/1     Running   0          3m53s
+nginx-94c4bd68b-rz9rr   1/1     Running   0          3m53s
+  
+[jegan@tektutor.org ~]$ # Scale up to 5 pods
+[jegan@tektutor.org ~]$ oc scale deploy/nginx --replicas=5
+deployment.apps/nginx scaled
+
+[jegan@tektutor.org ~]$ oc get po -w
+NAME                    READY   STATUS              RESTARTS   AGE
+nginx-94c4bd68b-6twtd   1/1     Running             0          4m17s
+nginx-94c4bd68b-grp6p   1/1     Running             0          4m17s
+nginx-94c4bd68b-rz9rr   1/1     Running             0          4m17s
+nginx-94c4bd68b-w7tsp   0/1     ContainerCreating   0          6s
+nginx-94c4bd68b-xlcxk   0/1     ContainerCreating   0          6s
+nginx-94c4bd68b-xlcxk   1/1     Running             0          12s
+nginx-94c4bd68b-w7tsp   1/1     Running             0          12s
+
+[jegan@tektutor.org ~]$ # Scale down to 3 pods
+[jegan@tektutor.org ~]$ oc scale deploy/nginx --replicas=3
+deployment.apps/nginx scaled
+  
+[jegan@tektutor.org ~]$ oc get po -w
+NAME                    READY   STATUS    RESTARTS   AGE
+nginx-94c4bd68b-6twtd   1/1     Running   0          4m50s
+nginx-94c4bd68b-grp6p   1/1     Running   0          4m50s
+nginx-94c4bd68b-rz9rr   1/1     Running   0          4m50s  
+</pre>
