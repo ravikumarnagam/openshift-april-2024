@@ -769,3 +769,46 @@ Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavaila
 No resources found in jegan namespace.  
 </pre>
 
+
+## Lab - Deploying nginx web server using bitnami image that follows openshift standards
+```
+oc create deploy nginx --image=bitnami/nginx:1.18 --replicas=3
+oc get deploy,rs,po
+oc get po -w
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org ~]$ oc create deploy nginx --image=bitnami/nginx:1.18 --replicas=3
+deployment.apps/nginx created
+  
+[jegan@tektutor.org ~]$ oc get deploy,rs,po
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   0/3     3            0           5s
+
+NAME                              DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-94c4bd68b   3         3         0       5s
+
+NAME                        READY   STATUS              RESTARTS   AGE
+pod/nginx-94c4bd68b-6twtd   0/1     ContainerCreating   0          5s
+pod/nginx-94c4bd68b-grp6p   0/1     ContainerCreating   0          5s
+pod/nginx-94c4bd68b-rz9rr   0/1     ContainerCreating   0          5s
+  
+[jegan@tektutor.org ~]$ oc get po -w
+NAME                    READY   STATUS    RESTARTS   AGE
+nginx-94c4bd68b-6twtd   1/1     Running   0          18s
+nginx-94c4bd68b-grp6p   1/1     Running   0          18s
+nginx-94c4bd68b-rz9rr   1/1     Running   0          18s
+^C[jegan@tektutor.org ~]$ oc logs nginx-94c4bd68b-6twtd
+nginx 10:35:46.67 
+nginx 10:35:46.68 Welcome to the Bitnami nginx container
+nginx 10:35:46.68 Subscribe to project updates by watching https://github.com/bitnami/bitnami-docker-nginx
+nginx 10:35:46.68 Submit issues and feature requests at https://github.com/bitnami/bitnami-docker-nginx/issues
+nginx 10:35:46.68 
+nginx 10:35:46.68 INFO  ==> ** Starting NGINX setup **
+nginx 10:35:46.69 INFO  ==> Validating settings in NGINX_* env vars
+nginx 10:35:46.70 INFO  ==> Initializing NGINX
+nginx 10:35:46.71 INFO  ==> ** NGINX setup finished! **
+
+nginx 10:35:46.72 INFO  ==> ** Starting NGINX **  
+</pre>
