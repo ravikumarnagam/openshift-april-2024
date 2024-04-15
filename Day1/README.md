@@ -581,3 +581,14 @@ openshift-service-ca-operator                                     Active
 openshift-user-workload-monitoring                                Active
 openshift-vsphere-infra                                           Active  
 </pre>
+
+## Lab - Finding the currently active project
+```
+oc project
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org ~]$ oc project
+Using project "jegan" on server "https://api.ocp4.tektutor.org.labs:6443".  
+</pre>
