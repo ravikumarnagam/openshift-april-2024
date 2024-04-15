@@ -714,3 +714,19 @@ nginx-7bf8c77b5b-4hvxb   0/1     CrashLoopBackOff   6 (2m43s ago)   8m59s
 NAME                     READY   STATUS             RESTARTS        AGE
 nginx-7bf8c77b5b-4hvxb   0/1     CrashLoopBackOff   6 (2m45s ago)   9m1s  
 </pre>
+
+## Lab - Deleting a deployment
+```
+oc delete deploy/nginx
+```
+
+Expected output
+<pre>
+  
+</pre>
+
+## Lab - Troubleshooting pod crashloopbackoff
+In order to find the reason why the Pod is crashing
+```
+oc logs 
+```
