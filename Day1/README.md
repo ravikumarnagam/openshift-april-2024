@@ -188,10 +188,47 @@ What is the minimum number of physical servers required to support 1000 Virtual 
 - Container is a running instance of a Docker image
 - each container has an unique ID and unique name
 - each container has an IP address, hostname, etc.,
-
+- every container has it own port range 0 - 65535 ( it uses a port namespace )
+  
 ## What is a Docker Container Registry?
 - it is a collection of many Docker Images
 - Docker supports 3 types of Registries
   1. Local Docker Registry ( it is a folder /var/lib/docker on linux )
   2. Private Docker Registry ( Sonatype Nexus or JFrog Artifactory )
   3. Docker Hub Website or Remote Registry powered by Sonatype Nexus Server
+
+## What is a Container Orchestration Platform?
+- Container Orchestration Platforms manages containers application workloads
+- though we can manually create, start, stop,restart, delete containers, practically in the industry no one manages containers manually
+- they offer high-availability (HA) to your containerized applications
+- they offer in-built monitoring features to check health/liveliness,etc.,
+- they offer in-built load balancing
+- they allow exposing your applications only within your network or externally to internet via Services
+- they support service discovery
+- they allow scaling up/down your application workloads
+- they allow upgrading/downgrading your application from one version to the other without any downtime
+- Examples
+  - Docker SWARM
+  - Google Kubernetes
+  - Red Hat OpenShift
+
+## About Docker SWARM
+- Docker Inc is the organization that developed Docker Container Engine
+- Docker SWARM is Docker Inc's native orchestration platform
+- Docker SWARM only supports Docker based containers
+- it is not production grade container orchestration platform
+- it is very light-weight, hence can be easily installed in your laptop
+- it is very good for learning container orchestration concepts in general, also good for light-weight developer/qa setup but not generally used in production
+
+## About Google Kubernetes
+- open source
+- production grade
+- supports many different types of containers
+- supports extending Kubernetes APIs, by adding Custom Resources and Custom Controllers
+  
+## About Red Hat Openshift
+- production grade
+- paid software from Red Hat ( an IBM company )
+- it is a Red Hat's distribution of Kubernetes
+- it is developed on top of opensource Google Kubernetes, hence it is a super set of Google Kubernetes with some additional features
+- Red Hat OpenShift has added many Customer Resources and Custom Controllers they added additional features on top of Google Kubernetes
