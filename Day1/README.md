@@ -481,3 +481,23 @@ master-3.ocp4.tektutor.org.labs   Ready    control-plane,master,worker   10h   v
 worker-1.ocp4.tektutor.org.labs   Ready    worker                        10h   v1.27.11+749fe1d   192.168.122.161   <none>        Red Hat Enterprise Linux CoreOS 414.92.202403270157-0 (Plow)   5.14.0-284.59.1.el9_2.x86_64   cri-o://1.27.4-6.1.rhaos4.14.gitd09e4c0.el9
 worker-2.ocp4.tektutor.org.labs   Ready    worker                        10h   v1.27.11+749fe1d   192.168.122.93    <none>        Red Hat Enterprise Linux CoreOS 414.92.202403270157-0 (Plow)   5.14.0-284.59.1.el9_2.x86_64   cri-o://1.27.4-6.1.rhaos4.14.gitd09e4c0.el9  
 </pre>
+
+## Lab - Creating a new project in Openshift CLI
+In the below command, replace 'jegan' with your name
+```
+oc new-project jegan
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org ~]$ oc new-project jegan
+Now using project "jegan" on server "https://api.ocp4.tektutor.org.labs:6443".
+
+You can add applications to this project with the 'new-app' command. For example, try:
+
+    oc new-app rails-postgresql-example
+
+to build a new example application in Ruby. Or use kubectl to deploy a simple Kubernetes application:
+
+    kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.43 -- /agnhost serve-hostname  
+</pre>
