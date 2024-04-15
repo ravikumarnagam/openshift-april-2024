@@ -309,6 +309,27 @@ cat ~/.kube/config
 - RHCOS also reserves many Ports for the internal use of Openshift
 - User applications will not have write access to certain reserved folders, user applications are allowed to perform things as non-admin users only, only certain special applications will have admin/root access
 
+## Info - What is a Pod?
+- a collection one or more containers that runs in the same openshift node
+- one or more Pods represents a single application
+
+## Info - What is a ReplicaSet?
+- ReplicaSet is a collection of one or more Pods
+- each ReplicaSet represents a single version of some application Pods
+- ReplicaSet has details like
+  - desired number of Pods
+  - actual number of Pods
+  - Pod status
+
+## Info - What is a Deployment?
+- Deployment represents an application that is deployed within Kubernetes/Openshift
+- When we deploy an application into Kubernetes/OpenShift it creates a Deployment, ReplicaSet and one or more Pods
+- Deployment is managed by Deployment Controller
+- ReplicaSet is managed by ReplicaSet Controller
+- Deployment manages ReplicaSet
+- ReplicaSet manages Pods
+- Deployment has one or more ReplicaSet
+  
 ## Getting inside master-1 node shell from Red Hat OpenShift web console
 
 ![master-node](openshift-1.png)
