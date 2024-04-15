@@ -312,7 +312,8 @@ cat ~/.kube/config
 ## Info - What is a Pod?
 - a collection one or more containers that runs in the same openshift node
 - one or more Pods represents a single application
-
+- this is the smallest unit that can be deployed into Kubernetes/OpenShift
+- IP addresses are assigned only on the Pod level, hence all containers that are part of the same Pod will have the same IP
 ## Info - What is a ReplicaSet?
 - ReplicaSet is a collection of one or more Pods
 - each ReplicaSet represents a single version of some application Pods
