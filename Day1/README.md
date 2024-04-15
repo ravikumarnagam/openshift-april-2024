@@ -167,4 +167,12 @@ What is the minimum number of physical servers required to support 1000 Virtual 
     - we can restrict how much percentage of CPU resources can be used by a container at the max
     - we can restrict how much RAM/storage a container can use at the max
 
-## Is it possible to install Docker
+## Is it possible to install Docker on Windows/Mac?
+- Yes it is possible to install Docker in Windows or Mac
+- When we install Docker for Windows/Mac, it also installs a thin linux-layer(Linux kernel)
+- technically linux containers runs on top of Linux even in a Windows/Mac machines
+
+## Is it possible to run .Net application within container?
+- Yes it is possible
+- MONO - is linux implemention of .Net Framework specification
+- MONO supports running .Net applications on Linux too
