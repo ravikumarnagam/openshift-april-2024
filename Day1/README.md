@@ -312,3 +312,132 @@ cat ~/.kube/config
 ## Getting inside master-1 node shell from Red Hat OpenShift web console
 
 ~[master-node](openshift-1.png)
+
+
+## Lab - Finding more details about an openshift node
+```
+oc get nodes
+oc describe node/master-1.ocp4.tektutor.org.labs
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org ~]$ <b>oc describe node/master-1.ocp4.tektutor.org.labs</b>
+Name:               master-1.ocp4.tektutor.org.labs
+Roles:              control-plane,master,worker
+Labels:             beta.kubernetes.io/arch=amd64
+                    beta.kubernetes.io/os=linux
+                    kubernetes.io/arch=amd64
+                    kubernetes.io/hostname=master-1.ocp4.tektutor.org.labs
+                    kubernetes.io/os=linux
+                    node-role.kubernetes.io/control-plane=
+                    node-role.kubernetes.io/master=
+                    node-role.kubernetes.io/worker=
+                    node.openshift.io/os_id=rhcos
+Annotations:        machineconfiguration.openshift.io/controlPlaneTopology: HighlyAvailable
+                    machineconfiguration.openshift.io/currentConfig: rendered-master-c585fd70786bf2b97debcbd4cba401bc
+                    machineconfiguration.openshift.io/desiredConfig: rendered-master-c585fd70786bf2b97debcbd4cba401bc
+                    machineconfiguration.openshift.io/desiredDrain: uncordon-rendered-master-c585fd70786bf2b97debcbd4cba401bc
+                    machineconfiguration.openshift.io/lastAppliedDrain: uncordon-rendered-master-c585fd70786bf2b97debcbd4cba401bc
+                    machineconfiguration.openshift.io/lastSyncedControllerConfigResourceVersion: 23186
+                    machineconfiguration.openshift.io/reason: 
+                    machineconfiguration.openshift.io/state: Done
+                    volumes.kubernetes.io/controller-managed-attach-detach: true
+CreationTimestamp:  Mon, 15 Apr 2024 04:49:14 +0530
+Taints:             <none>
+Unschedulable:      false
+Lease:
+  HolderIdentity:  master-1.ocp4.tektutor.org.labs
+  AcquireTime:     <unset>
+  RenewTime:       Mon, 15 Apr 2024 15:07:00 +0530
+Conditions:
+  Type             Status  LastHeartbeatTime                 LastTransitionTime                Reason                       Message
+  ----             ------  -----------------                 ------------------                ------                       -------
+  MemoryPressure   False   Mon, 15 Apr 2024 15:03:13 +0530   Mon, 15 Apr 2024 04:49:14 +0530   KubeletHasSufficientMemory   kubelet has sufficient memory available
+  DiskPressure     False   Mon, 15 Apr 2024 15:03:13 +0530   Mon, 15 Apr 2024 04:49:14 +0530   KubeletHasNoDiskPressure     kubelet has no disk pressure
+  PIDPressure      False   Mon, 15 Apr 2024 15:03:13 +0530   Mon, 15 Apr 2024 04:49:14 +0530   KubeletHasSufficientPID      kubelet has sufficient PID available
+  Ready            True    Mon, 15 Apr 2024 15:03:13 +0530   Mon, 15 Apr 2024 04:53:19 +0530   KubeletReady                 kubelet is posting ready status
+Addresses:
+  InternalIP:  192.168.122.133
+  Hostname:    master-1.ocp4.tektutor.org.labs
+Capacity:
+  cpu:                8
+  ephemeral-storage:  51837932Ki
+  hugepages-1Gi:      0
+  hugepages-2Mi:      0
+  memory:             15991660Ki
+  pods:               250
+Allocatable:
+  cpu:                7500m
+  ephemeral-storage:  46700096229
+  hugepages-1Gi:      0
+  hugepages-2Mi:      0
+  memory:             14840684Ki
+  pods:               250
+System Info:
+  Machine ID:                             132261e6b50049df9a5bf5d5db734ad5
+  System UUID:                            132261e6-b500-49df-9a5b-f5d5db734ad5
+  Boot ID:                                0da44812-28ae-491b-8f4d-4aa091680c58
+  Kernel Version:                         5.14.0-284.59.1.el9_2.x86_64
+  OS Image:                               Red Hat Enterprise Linux CoreOS 414.92.202403270157-0 (Plow)
+  Operating System:                       linux
+  Architecture:                           amd64
+  Container Runtime Version:              cri-o://1.27.4-6.1.rhaos4.14.gitd09e4c0.el9
+  Kubelet Version:                        v1.27.11+749fe1d
+  Kube-Proxy Version:                     v1.27.11+749fe1d
+Non-terminated Pods:                      (42 in total)
+  Namespace                               Name                                                              CPU Requests  CPU Limits  Memory Requests  Memory Limits  Age
+  ---------                               ----                                                              ------------  ----------  ---------------  -------------  ---
+  openshift-apiserver                     apiserver-5866c9cc47-lkxbm                                        110m (1%)     0 (0%)      250Mi (1%)       0 (0%)         9h
+  openshift-authentication                oauth-openshift-64b6c74df9-d54tz                                  10m (0%)      0 (0%)      50Mi (0%)        0 (0%)         9h
+  openshift-cluster-node-tuning-operator  tuned-jzzfd                                                       10m (0%)      0 (0%)      50Mi (0%)        0 (0%)         10h
+  openshift-cluster-storage-operator      csi-snapshot-controller-766c7998fd-n5vmf                          10m (0%)      0 (0%)      50Mi (0%)        0 (0%)         10h
+  openshift-cluster-storage-operator      csi-snapshot-webhook-76bf9bd758-8vdcx                             10m (0%)      0 (0%)      20Mi (0%)        0 (0%)         10h
+  openshift-controller-manager            controller-manager-857895fbc9-4w422                               100m (1%)     0 (0%)      100Mi (0%)       0 (0%)         9h
+  openshift-dns                           dns-default-dhb6m                                                 60m (0%)      0 (0%)      110Mi (0%)       0 (0%)         10h
+  openshift-dns                           node-resolver-xx22n                                               5m (0%)       0 (0%)      21Mi (0%)        0 (0%)         10h
+  openshift-etcd                          etcd-guard-master-1.ocp4.tektutor.org.labs                        10m (0%)      0 (0%)      5Mi (0%)         0 (0%)         10h
+  openshift-etcd                          etcd-master-1.ocp4.tektutor.org.labs                              360m (4%)     0 (0%)      910Mi (6%)       0 (0%)         9h
+  openshift-image-registry                image-registry-985587bb7-mh6rp                                    100m (1%)     0 (0%)      256Mi (1%)       0 (0%)         10h
+  openshift-image-registry                node-ca-52lpn                                                     10m (0%)      0 (0%)      10Mi (0%)        0 (0%)         10h
+  openshift-ingress-canary                ingress-canary-gb8rg                                              10m (0%)      0 (0%)      20Mi (0%)        0 (0%)         10h
+  openshift-ingress                       router-default-6fbc577945-78z8z                                   100m (1%)     0 (0%)      256Mi (1%)       0 (0%)         10h
+  openshift-kube-apiserver                kube-apiserver-guard-master-1.ocp4.tektutor.org.labs              10m (0%)      0 (0%)      5Mi (0%)         0 (0%)         10h
+  openshift-kube-apiserver                kube-apiserver-master-1.ocp4.tektutor.org.labs                    290m (3%)     0 (0%)      1224Mi (8%)      0 (0%)         9h
+  openshift-kube-controller-manager       kube-controller-manager-guard-master-1.ocp4.tektutor.org.labs     10m (0%)      0 (0%)      5Mi (0%)         0 (0%)         10h
+  openshift-kube-controller-manager       kube-controller-manager-master-1.ocp4.tektutor.org.labs           80m (1%)      0 (0%)      500Mi (3%)       0 (0%)         9h
+  openshift-kube-scheduler                openshift-kube-scheduler-guard-master-1.ocp4.tektutor.org.labs    10m (0%)      0 (0%)      5Mi (0%)         0 (0%)         10h
+  openshift-kube-scheduler                openshift-kube-scheduler-master-1.ocp4.tektutor.org.labs          25m (0%)      0 (0%)      150Mi (1%)       0 (0%)         9h
+  openshift-machine-config-operator       kube-rbac-proxy-crio-master-1.ocp4.tektutor.org.labs              20m (0%)      0 (0%)      50Mi (0%)        0 (0%)         10h
+  openshift-machine-config-operator       machine-config-daemon-b8pkp                                       40m (0%)      0 (0%)      100Mi (0%)       0 (0%)         10h
+  openshift-machine-config-operator       machine-config-server-rplv2                                       20m (0%)      0 (0%)      50Mi (0%)        0 (0%)         10h
+  openshift-marketplace                   certified-operators-cnp2v                                         10m (0%)      0 (0%)      50Mi (0%)        0 (0%)         7h23m
+  openshift-marketplace                   community-operators-4xclh                                         10m (0%)      0 (0%)      50Mi (0%)        0 (0%)         101m
+  openshift-monitoring                    kube-state-metrics-5c965858b8-fxl2b                               4m (0%)       0 (0%)      110Mi (0%)       0 (0%)         10h
+  openshift-monitoring                    node-exporter-xks44                                               9m (0%)       0 (0%)      47Mi (0%)        0 (0%)         10h
+  openshift-monitoring                    openshift-state-metrics-59c7b5fbbf-xcxdb                          3m (0%)       0 (0%)      72Mi (0%)        0 (0%)         10h
+  openshift-monitoring                    prometheus-adapter-7b9975fb6d-rc689                               1m (0%)       0 (0%)      40Mi (0%)        0 (0%)         10h
+  openshift-monitoring                    prometheus-operator-admission-webhook-6c4c698b7d-jkr8c            5m (0%)       0 (0%)      30Mi (0%)        0 (0%)         10h
+  openshift-multus                        multus-additional-cni-plugins-jbn5z                               10m (0%)      0 (0%)      10Mi (0%)        0 (0%)         10h
+  openshift-multus                        multus-n4pct                                                      10m (0%)      0 (0%)      65Mi (0%)        0 (0%)         10h
+  openshift-multus                        network-metrics-daemon-drlh4                                      20m (0%)      0 (0%)      120Mi (0%)       0 (0%)         10h
+  openshift-network-diagnostics           network-check-source-8c95bf67d-h4ndv                              10m (0%)      0 (0%)      40Mi (0%)        0 (0%)         10h
+  openshift-network-diagnostics           network-check-target-dcqf2                                        10m (0%)      0 (0%)      15Mi (0%)        0 (0%)         10h
+  openshift-network-node-identity         network-node-identity-d8q85                                       20m (0%)      0 (0%)      100Mi (0%)       0 (0%)         10h
+  openshift-oauth-apiserver               apiserver-6d8bc5d48c-fd429                                        150m (2%)     0 (0%)      200Mi (1%)       0 (0%)         10h
+  openshift-operator-lifecycle-manager    packageserver-7449897948-qc47c                                    10m (0%)      0 (0%)      50Mi (0%)        0 (0%)         10h
+  openshift-route-controller-manager      route-controller-manager-84558d85b5-g9kj5                         100m (1%)     0 (0%)      100Mi (0%)       0 (0%)         9h
+  openshift-sdn                           sdn-controller-5zmvj                                              20m (0%)      0 (0%)      70Mi (0%)        0 (0%)         10h
+  openshift-sdn                           sdn-r7554                                                         110m (1%)     0 (0%)      220Mi (1%)       0 (0%)         10h
+  openshift-service-ca                    service-ca-85cbb444f7-rz48b                                       10m (0%)      0 (0%)      120Mi (0%)       0 (0%)         10h
+Allocated resources:
+  (Total limits may be over 100 percent, i.e., overcommitted.)
+  Resource           Requests      Limits
+  --------           --------      ------
+  cpu                1932m (25%)   0 (0%)
+  memory             5706Mi (39%)  0 (0%)
+  ephemeral-storage  0 (0%)        0 (0%)
+  hugepages-1Gi      0 (0%)        0 (0%)
+  hugepages-2Mi      0 (0%)        0 (0%)
+Events:              <none>  
+</pre>
