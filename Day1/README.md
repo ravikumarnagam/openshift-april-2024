@@ -176,3 +176,15 @@ What is the minimum number of physical servers required to support 1000 Virtual 
 - Yes it is possible
 - MONO - is linux implemention of .Net Framework specification
 - MONO supports running .Net applications on Linux too
+
+## What is a Docker Image?
+- it is like an ISO image we use to install Windows or Mac or Linux
+- in other words, it is specification of a Docker container
+- in other words, it is a blueprint of a Docker container
+- using a Docker Image, we can create any number of containers
+- each Container Image has an unique ID and name
+
+## What is a Docker Container?
+- Container is a running instance of a Docker image
+- each container has an unique ID and unique name
+- each container has an IP address, hostname, etc.,
