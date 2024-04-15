@@ -611,6 +611,8 @@ Now using project "jegan" on server "https://api.ocp4.tektutor.org.labs:6443".
 </pre>
 
 ## Lab - Deleting a project
+When we delete a project, all the resources created within the project will be automatically deleted.
+
 ```
 oc get projects | grep jegan
 oc delete project/jegan
