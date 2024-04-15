@@ -7,6 +7,7 @@ https://app.mymapit.in/code4/tiny/8Y8cj9
 
 Note
 <pre>
+- Copy/Paste between your laptop and rps lab machine is disabled as per your bank policy
 - Kindly use your personal email-id while registering ( avoid using BOFA id )
 - The link above may not work directly from your work laptop web browser
 - Once you are done with the test we will start the training 
