@@ -858,7 +858,32 @@ nginx-94c4bd68b-grp6p   1/1     Running   0          4m50s
 nginx-94c4bd68b-rz9rr   1/1     Running   0          4m50s  
 </pre>
 
-## Info - Understand what happens when we create a deployment
+## Info - Understand what internally happens within Openshift when we create a deployment
 ```
 oc create deploy nginx --image=bitnami/nginx:1.18 --replicas=3
 ```
+
+The below chain of activities happens within openshift
+<pre>
+- oc client tools makes a REST call to API Server requesting to create a deploy by nginx with the mentioned image
+- API Server receives the request, it then creates a Deployment record in the etcd database
+- API Server sends a broadcasting event saying a new Deployment is created
+- Deployment Controller receives the event, it then makes a REST call to API server requesting to create a ReplicaSet for the nginx deployment
+- API Server receives the request, it then creates a ReplicaSet record in the etcd database
+- API Server sends a broadcasting event saying a new ReplicaSet is created
+- ReplicaSet Controller receives the event, it then makes a REST call to API Server requesting to create x number of Pods as mentioned in the ReplicaSet
+- API Server receives the request, it then creates Pod records in the etcd database
+- API Server sends a broadcasting event saying new Pod created, this is done for every single Pod in the ReplicaSet
+- Scheduler receives the event, it then identifies a node where the containers for the Pod can be deployed, it then makes a REST call to the API Server along with the scheduling recommendations
+- API Server receives the request, it retrieves the existing Pod records from the etcd database and it updates the scheduling recommendations shared by scheduler
+- API Server sends a broadcasting event, saying Pod scheduled to some node
+- kubelet container agent running on the specific node where the Pod is scheduled receives the event, it then pull the required container images to the local registry on the node where kubelet agent is running, it then creates the containers and starts the container, it then updates the status of those containers to the API server via REST calls
+- API Server receives the REST call status updates from kubelet, it retries the respective Pod records from the etcd database and updates the current status of the Pod
+- API Server will send a broadcasting event about the new Pod status
+- ReplicaSet Controller will receive the event, it then updates the actual status of the Pods
+- ReplicaSet will make a REST call regarding ReplicaSet update to the API Server, API Server then updates the ReplicaSet entry in the etcd databases
+- API Server will send broadcasting events about ReplicaSet updated status
+- Deployment Controller receives the event, it then updates its available status and makes a REST call to API Server regarding Deployment update
+- API Server retrieves the respective Deployment record updates the Deployment status
+- API Server sends broadcasting events regarding Deployment updated status
+</pre>
