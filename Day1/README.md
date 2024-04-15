@@ -46,15 +46,6 @@ Expected output
 <pre>
 [root@tektutor.org openshift-april-2024]# docker --version
 Docker version 26.0.1, build d260a54
-The connection to the server localhost:8080 was refused - did you specify the right host or port?
-[root@tektutor.org openshift-april-2024]# source ~/.bashrc
-[root@tektutor.org openshift-april-2024]# oc get nodes
-NAME                              STATUS   ROLES                         AGE     VERSION
-master-1.ocp4.tektutor.org.labs   Ready    control-plane,master,worker   5h35m   v1.27.11+749fe1d
-master-2.ocp4.tektutor.org.labs   Ready    control-plane,master,worker   5h35m   v1.27.11+749fe1d
-master-3.ocp4.tektutor.org.labs   Ready    control-plane,master,worker   5h35m   v1.27.11+749fe1d
-worker-1.ocp4.tektutor.org.labs   Ready    worker                        5h18m   v1.27.11+749fe1d
-worker-2.ocp4.tektutor.org.labs   Ready    worker                        5h18m   v1.27.11+749fe1d  
 </pre>
 
 Check the version of oc and kubectl openshift client tools
