@@ -308,3 +308,7 @@ cat ~/.kube/config
 - if an application attempts to modify a read-only folder RHCOS will not allow those applications to continue running
 - RHCOS also reserves many Ports for the internal use of Openshift
 - User applications will not have write access to certain reserved folders, user applications are allowed to perform things as non-admin users only, only certain special applications will have admin/root access
+
+## Getting inside master-1 node shell from Red Hat OpenShift web console
+
+~[master-node](openshift-1.png)
