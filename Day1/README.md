@@ -626,3 +626,43 @@ project.project.openshift.io "jegan" deleted
 [jegan@tektutor.org ~]$ oc get projects | grep jegan
 [jegan@tektutor.org ~]$ 
 </pre>
+
+
+## Lab - Creating a new-project and deploying an application
+```
+oc new-project jegan
+oc create deploy nginx --image=nginx:latest
+
+oc get deployments
+oc get deployment
+oc get deploy
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org ~]$ oc new-project jegan
+Already on project "jegan" on server "https://api.ocp4.tektutor.org.labs:6443".
+
+You can add applications to this project with the 'new-app' command. For example, try:
+
+    oc new-app rails-postgresql-example
+
+to build a new example application in Ruby. Or use kubectl to deploy a simple Kubernetes application:
+
+    kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.43 -- /agnhost serve-hostname
+
+[jegan@tektutor.org ~]$ oc create deploy nginx --image=nginx:latest
+deployment.apps/nginx created
+  
+[jegan@tektutor.org ~]$ oc get deployments
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+nginx   0/1     1            0           37s
+  
+[jegan@tektutor.org ~]$ oc get deployment
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+nginx   0/1     1            0           41s
+  
+[jegan@tektutor.org ~]$ oc get deploy
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+nginx   0/1     1            0           43s  
+</pre>
