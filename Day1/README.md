@@ -887,3 +887,26 @@ The below chain of activities happens within openshift
 - API Server retrieves the respective Deployment record updates the Deployment status
 - API Server sends broadcasting events regarding Deployment updated status
 </pre>
+
+## Subnet
+- it is range of IP address
+- it is logical sub-division of a physical network
+- For example
+  - 172.17.0.0/16 (IPV4 Address - 32 bit address)
+  - 172 - 1 byte (8 bits)
+  - 17  - 1 byte (8 bits)
+  - 0   - 1 byte (8 bits)
+  - 0   - 1 byte (8 bits)
+  - 16  - refers to CIDR (indicates from left side 16 bits are fixed and remaining bits can change)
+  - the first IP address is 172.17.0.0
+  - the second IP address is 172.17.0.1
+  - ...
+  - 172.17.0.255
+  - ...
+  - 172.17.1.0
+  - 172.17.1.1
+  - ...
+  - 172.17.1.255
+  - ...
+  - 172.17.255.255
+  - Total number of IP address in 172.17.0.0/16 = 256 x 256 = 65535 IP addresses
