@@ -775,6 +775,7 @@ No resources found in jegan namespace.
 oc create deploy nginx --image=bitnami/nginx:1.18 --replicas=3
 oc get deploy,rs,po
 oc get po -w
+oc logs nginx-94c4bd68b-6twtd
 ```
 
 Expected output
@@ -799,6 +800,7 @@ NAME                    READY   STATUS    RESTARTS   AGE
 nginx-94c4bd68b-6twtd   1/1     Running   0          18s
 nginx-94c4bd68b-grp6p   1/1     Running   0          18s
 nginx-94c4bd68b-rz9rr   1/1     Running   0          18s
+  
 ^C[jegan@tektutor.org ~]$ oc logs nginx-94c4bd68b-6twtd
 nginx 10:35:46.67 
 nginx 10:35:46.68 Welcome to the Bitnami nginx container
