@@ -728,5 +728,33 @@ Expected output
 ## Lab - Troubleshooting pod crashloopbackoff
 In order to find the reason why the Pod is crashing
 ```
-oc logs 
+oc get pods
+oc logs nginx-7bf8c77b5b-4hvxb
 ```
+
+Expected output
+<pre>
+[jegan@tektutor.org ~]$ oc get po -w
+NAME                     READY   STATUS              RESTARTS      AGE
+nginx-7bf8c77b5b-4hvxb   0/1     CrashLoopBackOff    7 (28s ago)   11m
+nginx-7bf8c77b5b-rwbkh   0/1     ContainerCreating   0             9s
+nginx-7bf8c77b5b-z45c6   0/1     ContainerCreating   0             9s
+
+[jegan@tektutor.org ~]$ oc logs nginx-7bf8c77b5b-4hvxb
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+10-listen-on-ipv6-by-default.sh: info: can not modify /etc/nginx/conf.d/default.conf (read-only file system?)
+/docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+/docker-entrypoint.sh: Configuration complete; ready for start up
+2024/04/15 10:17:47 [warn] 1#1: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /etc/nginx/nginx.conf:2
+nginx: [warn] the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /etc/nginx/nginx.conf:2
+2024/04/15 10:17:47 [emerg] 1#1: mkdir() "/var/cache/nginx/client_temp" failed (13: Permission denied)
+nginx: [emerg] mkdir() "/var/cache/nginx/client_temp" failed (13: Permission denied)  
+</pre>
+
+As you can observe from the above log, the nginx web server is attempting to create a folder under /var directory.
+
+RHCOS Operating System allows modifying the /var folder only via Machine Config Operator, hence the application is crashing due to permission issues. Once the Pod crashes, Openshift is trying to repair the Pod by restarting.  But the Pod will again attempt to create a directory under /var and this keeps on going in a loop.
