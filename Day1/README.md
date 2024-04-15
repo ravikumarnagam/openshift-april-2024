@@ -311,7 +311,7 @@ cat ~/.kube/config
 
 ## Getting inside master-1 node shell from Red Hat OpenShift web console
 
-~[master-node](openshift-1.png)
+![master-node](openshift-1.png)
 
 
 ## Lab - Finding more details about an openshift node
