@@ -2,7 +2,8 @@
 
 ## Troubleshooting RPS Cloud Login
 ```
-The user-id that was shared to you misses letter 'u', so you need to type your username as 24MAN0113-u25.  The two digit number would vary for each participant.
+- The user-id that was shared to you misses letter 'u', so you need to type your username as 24MAN0113-u25.
+- The two digit number would vary for each participant.
 ```
 
 ## Pre-test - kindly complete the pre-test from your RPS Lab machine
