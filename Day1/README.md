@@ -857,3 +857,8 @@ nginx-94c4bd68b-6twtd   1/1     Running   0          4m50s
 nginx-94c4bd68b-grp6p   1/1     Running   0          4m50s
 nginx-94c4bd68b-rz9rr   1/1     Running   0          4m50s  
 </pre>
+
+## Info - Understand what happens when we create a deployment
+```
+oc create deploy nginx --image=bitnami/nginx:1.18 --replicas=3
+```
