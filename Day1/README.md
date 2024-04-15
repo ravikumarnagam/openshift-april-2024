@@ -291,3 +291,8 @@ What is the minimum number of physical servers required to support 1000 Virtual 
 - optionally we could also use the --kubeconfig flag with the oc command to point to a config file
 - it is also possible to use a KUBECONFIG environment variable to point to the config file
 - Just to give an idea, it is possible that your Kubernetes/OpenShift is running in AWS/Azure but you could install oc/kubectl client tool on your laptop with a config file and still run all the oc/kubectl commands from your laptop without going to aws/azure
+
+To print the content of kubeconfig file
+```
+cat ~/.kube/config
+```
