@@ -223,7 +223,7 @@ What is the minimum number of physical servers required to support 1000 Virtual 
 ## About Google Kubernetes
 - open source
 - production grade
-- supports many different types of containers
+- supports many different types of containers ( containerd, LXC, CRI-O, etc,,)
 - supports extending Kubernetes APIs, by adding Custom Resources and Custom Controllers
   
 ## About Red Hat Openshift
@@ -232,3 +232,55 @@ What is the minimum number of physical servers required to support 1000 Virtual 
 - it is a Red Hat's distribution of Kubernetes
 - it is developed on top of opensource Google Kubernetes, hence it is a super set of Google Kubernetes with some additional features
 - Red Hat OpenShift has added many Customer Resources and Custom Controllers they added additional features on top of Google Kubernetes
+- Unlike Kubernetes, OpenShift only supports CRI-O containers ( Podman Container Engine )
+- OpenShift upto v3.x it was using Docker (runC) containers only
+- OpenShift v4.x onwards it stopped support for Docker and replaced Docker with Podman(CRI-O)
+
+## Red Hat OpenShift Architecture
+
+## Master Node - Control Plane Components
+- Control Plane Components runs only on the master nodes
+- Control Plane Components
+  - API Server
+  - etcd key/value datastore
+  - Scheduler
+  - Controller Managers ( Collection of many Controllers )
+    - Deployment Controller
+    - ReplicaSet Controller
+    - ReplicationController
+    - Job Controller
+    - CronJob Controller
+    - Endpoint Controller
+    - StatefulSet Controller
+    - Daemonset Controller
+
+## API Server
+- a collection of many REST APIs
+- for every features supported by Openshift there is a bunch REST APIs
+- is the heart of openshift
+- all the Kubernetes/Openshift components only communicate to API server via REST calls
+- API server notifies about different changes to other components in K8s/Openshift via events
+- API server is the only component which stores/fetches data into the etcd database
+## Scheduler
+
+## etcd database
+- key/value based data store
+- it is an opensource database which can be used outside the scope of Kubernetes/Openshift
+- this is where the entire cluster-state, application status, etc are stored
+- each time some change happens in etcd database, API server will notify  other components about those changes via broadcasting events
+  
+## Controller Managers
+- for every type of resource there is one controller to manage them
+- controllers supports monitoring features
+- they check the health of applications/resources and repairs them when required
+- Whenever application is deployed via Deployment, the Deployment Controller is the one which creates the Pods for a deployment, monitors the health of the Pod and when required heals/repairs/replaces bad pods with good healthy ones
+
+## Kubernetes/Openshift resources
+- Deployment
+- ReplicaSet
+- Pod
+- StatefulSet
+- DaemonSet
+- Job
+- CronJob
+- Service
