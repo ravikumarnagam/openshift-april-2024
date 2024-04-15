@@ -140,3 +140,31 @@ What is the minimum number of physical servers required to support 1000 Virtual 
 - containers that runs in the same machines shares the hardware resources on the underlying operating system
 - containers don't represent a OS, containers don't have their own hardware or OS kernel
 - containers depends on the underlying os kernel for any OS functionality
+
+## Container Engine
+- is a high-level software that offers easy to use user-friendly commands
+- without knowing low-level linux kernel features, we can easily manage images and containers
+- hence, end-users tend to use Container Engines over the Container Runtime
+- Container Engines interally depends on Container Runtimes to manage images and containers
+- Examples
+  - Docker is a Container Engine ( depends on runC Container Runtime )
+  - Podman is a Container Engine ( depends on CRI-O Container Runtime )
+
+## Container Runtime
+- is a low-level software that manages images and containers
+- it is not so user-friendly, hence generally end-users like us won't directly use a container runtime
+- know how to
+  - create a container using container image
+  - stop/restart/kill/abort containers
+- Examples
+  - runC
+  - CRI-O
+  
+## Linux kernel features that enable container technology
+- Namespace ( containers running on the same machines are isolated from each other )
+- Control Groups (CGroups)
+  - this allows applying resource quota restrictions on containers
+    - we can restrict how much percentage of CPU resources can be used by a container at the max
+    - we can restrict how much RAM/storage a container can use at the max
+
+## Is it possible to install Docker
