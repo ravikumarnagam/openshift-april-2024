@@ -188,3 +188,10 @@ What is the minimum number of physical servers required to support 1000 Virtual 
 - Container is a running instance of a Docker image
 - each container has an unique ID and unique name
 - each container has an IP address, hostname, etc.,
+
+## What is a Docker Container Registry?
+- it is a collection of many Docker Images
+- Docker supports 3 types of Registries
+  1. Local Docker Registry ( it is a folder /var/lib/docker on linux )
+  2. Private Docker Registry ( Sonatype Nexus or JFrog Artifactory )
+  3. Docker Hub Website or Remote Registry powered by Sonatype Nexus Server
