@@ -299,3 +299,12 @@ To print the content of kubeconfig file
 ```
 cat ~/.kube/config
 ```
+
+## About Red Hat Enterpise Core OS ( RHCOS )
+- an optimized operating system created especially for the use of Container Orchestration Platforms
+- each version of RHCOS comes with a specific version of Podman Container Engine and CRI-O Container Runtime
+- RHCOS enforces many best practices and security features
+- only folders the application will have read/write
+- if an application attempts to modify a read-only folder RHCOS will not allow those applications to continue running
+- RHCOS also reserves many Ports for the internal use of Openshift
+- User applications will not have write access to certain reserved folders, user applications are allowed to perform things as non-admin users only, only certain special applications will have admin/root access
