@@ -691,3 +691,26 @@ nginx-7bf8c77b5b   1         1         0       7m30s
 NAME               DESIRED   CURRENT   READY   AGE
 nginx-7bf8c77b5b   1         1         0       7m32s  
 </pre>
+
+
+Listing the pods ( application instances )
+```
+oc get pods
+oc get pod
+oc get po
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org ~]$ oc get pods
+NAME                     READY   STATUS             RESTARTS        AGE
+nginx-7bf8c77b5b-4hvxb   0/1     CrashLoopBackOff   6 (2m40s ago)   8m56s
+
+[jegan@tektutor.org ~]$ oc get pod
+NAME                     READY   STATUS             RESTARTS        AGE
+nginx-7bf8c77b5b-4hvxb   0/1     CrashLoopBackOff   6 (2m43s ago)   8m59s
+
+[jegan@tektutor.org ~]$ oc get po
+NAME                     READY   STATUS             RESTARTS        AGE
+nginx-7bf8c77b5b-4hvxb   0/1     CrashLoopBackOff   6 (2m45s ago)   9m1s  
+</pre>
