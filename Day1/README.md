@@ -715,16 +715,6 @@ NAME                     READY   STATUS             RESTARTS        AGE
 nginx-7bf8c77b5b-4hvxb   0/1     CrashLoopBackOff   6 (2m45s ago)   9m1s  
 </pre>
 
-## Lab - Deleting a deployment
-```
-oc delete deploy/nginx
-```
-
-Expected output
-<pre>
-  
-</pre>
-
 ## Lab - Troubleshooting pod crashloopbackoff
 In order to find the reason why the Pod is crashing
 ```
@@ -758,3 +748,24 @@ nginx: [emerg] mkdir() "/var/cache/nginx/client_temp" failed (13: Permission den
 As you can observe from the above log, the nginx web server is attempting to create a folder under /var directory.
 
 RHCOS Operating System allows modifying the /var folder only via Machine Config Operator, hence the application is crashing due to permission issues. Once the Pod crashes, Openshift is trying to repair the Pod by restarting.  But the Pod will again attempt to create a directory under /var and this keeps on going in a loop.
+
+## Lab - Deleting a deployment
+```
+oc delete deploy/nginx
+oc get deploy,rs,po
+oc get all
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org ~]$ oc delete deploy/nginx
+deployment.apps "nginx" deleted
+
+[jegan@tektutor.org ~]$ oc get deploy,rs,po
+No resources found in jegan namespace.
+  
+[jegan@tektutor.org ~]$ oc get all
+Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavailable in v4.10000+
+No resources found in jegan namespace.  
+</pre>
+
