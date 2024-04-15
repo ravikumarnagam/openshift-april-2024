@@ -321,6 +321,7 @@ cat ~/.kube/config
   - desired number of Pods
   - actual number of Pods
   - Pod status
+- supports scale up/down
 
 ## Info - What is a Deployment?
 - Deployment represents an application that is deployed within Kubernetes/Openshift
@@ -330,6 +331,7 @@ cat ~/.kube/config
 - Deployment manages ReplicaSet
 - ReplicaSet manages Pods
 - Deployment has one or more ReplicaSet
+- Rolling update is supported by Deployment
   
 ## Getting inside master-1 node shell from Red Hat OpenShift web console
 
