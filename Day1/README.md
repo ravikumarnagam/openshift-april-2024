@@ -916,8 +916,6 @@ The below chain of activities happens within openshift
 
 ## Lab - Creating an internal ClusterIP service for existing nginx deployment
 
-Kubernetes/OpenShift reserves the port range 30000-32767 for the NodePort services. For each NodePort service we create, Openshift will pick one conflicting port from the above range and opens the port on all nodes in the cluster for that particular NodePort external service.
-
 We can access the Nodeport service using either http://NodeIP:Node-port or http://NodeName:Node-port.
 
 ```
@@ -1095,6 +1093,8 @@ Events:            <none>
 </pre>
 
 ## Lab - Creating an external NodePort service for exiting nginx deployment
+
+Kubernetes/OpenShift reserves the port range 30000-32767 for the NodePort services. For each NodePort service we create, Openshift will automatically pick a non-conflicting port from the above range and opens the port on all nodes in the cluster for that particular NodePort external service.
 ```
 oc get services
 oc delete svc/nginx
