@@ -249,9 +249,9 @@ Commercial support is available at
 ## Ingress
 <pre>
 - is a routing/forwarding rule
-- routing forwarding rule we can using a kubernetes/openshift resource called Ingress
-- there is controller which manages Ingress resources called Ingress Controller
-- Ingress Controller which is part of Openshift/Kubernetes, constantly monitors for new Ingress resources created anywhere in the openshift cluster
+- we can define routing forwarding rule using a kubernetes/openshift resource called Ingress
+- there is a controller which manages Ingress resources called Ingress Controller
+- Openshift Ingress Controller constantly monitors new Ingress resources created anywhere in the openshift cluster
 - Whenever the Ingress Controller get to know about a new Ingress resource, it fetches ingress routing rules and then it configures the Load balancer with those routing rules
 
 - For an Ingress to work, we need 3 types of resources
