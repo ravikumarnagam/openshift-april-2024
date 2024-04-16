@@ -78,7 +78,7 @@ ls
 oc apply -f nginx-deploy.yml
 oc get all
 oc expose deploy/nginx --type=ClusterIP --port=8080 --dry-run=client -o yaml
-
+oc get svc
 ```
 
 Expected output
@@ -136,4 +136,43 @@ total 16
 -rw-r--r-- 1 root root 293 Apr 16 14:19 nginx-deploy.yml
 -rw-r--r-- 1 root root 248 Apr 16 14:27 nginx-lb-svc.yml
 -rw-r--r-- 1 root root 244 Apr 16 14:26 nginx-nodeport-svc.yml
+</pre>
+
+## Lab - Create a clusterip internal service declaratively
+```
+oc get deploy,rs,po
+oc get svc
+oc apply -f nginx-clusterip-svc.yml
+oc get svc
+```
+
+Expected output
+<pre>
+  
+</pre>
+
+## Lab - Create a nodeport external service declaratively
+```
+oc get deploy,rs,po
+oc get svc
+oc apply -f nginx-nodeport-svc.yml
+oc get svc
+```
+
+Expected output
+<pre>
+  
+</pre>
+
+## Lab - Create a loadbalancer external service declaratively
+```
+oc get deploy,rs,po
+oc get svc
+oc apply -f nginx-lb-svc.yml
+oc get svc
+```
+
+Expected output
+<pre>
+  
 </pre>
