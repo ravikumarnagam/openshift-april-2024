@@ -961,3 +961,124 @@ Endpoints:         10.128.2.6:8080,10.129.0.85:8080,10.131.0.13:8080
 Session Affinity:  None
 Events:            <none>  
 </pre>
+
+Accessing the ClusterIP Internal service
+```
+oc create deploy test --image=tektutor/spring-ms:1.0
+oc get po -w
+oc rsh po/test-69cc49bb5c-k9f4s
+
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org ~]$ oc create deploy test --image=tektutor/spring-ms:1.0
+deployment.apps/test created
+  
+[jegan@tektutor.org ~]$ oc get po -w
+NAME                    READY   STATUS              RESTARTS   AGE
+nginx-94c4bd68b-5d475   1/1     Running             0          30m
+nginx-94c4bd68b-9vwn5   1/1     Running             0          55m
+nginx-94c4bd68b-gmddr   1/1     Running             0          55m
+nginx-94c4bd68b-lt4x2   1/1     Running             0          55m
+nginx-94c4bd68b-tc2kz   1/1     Running             0          30m
+test-69cc49bb5c-k9f4s   0/1     ContainerCreating   0          3s
+test-69cc49bb5c-k9f4s   1/1     Running             0          22s
+  
+^C[jegan@tektutor.org ~]$ oc rsh po/test-69cc49bb5c-k9f4s
+sh-4.4$ curl http://nginx:8080
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+sh-4.4$ 
+sh-4.4$ cat /etc/resolv.conf 
+search jegan.svc.cluster.local svc.cluster.local cluster.local ocp4.tektutor.org.labs
+nameserver 172.30.0.10
+options ndots:5
+sh-4.4$ exit
+exit
+
+[jegan@tektutor.org ~]$ oc get services --all-namespaces | grep dns
+openshift-dns-operator                             metrics                                    ClusterIP      172.30.125.40    <none>                                 9393/TCP                              3h17m
+openshift-dns                                      dns-default                                ClusterIP      172.30.0.10      <none>                                 53/UDP,53/TCP,9154/TCP                3h9m
+  
+[jegan@tektutor.org ~]$ oc get po -n openshift-dns
+NAME                  READY   STATUS    RESTARTS   AGE
+dns-default-47l8t     2/2     Running   0          3h10m
+dns-default-9nstb     2/2     Running   0          168m
+dns-default-nwbnz     2/2     Running   0          3h10m
+dns-default-q8wbm     2/2     Running   0          168m
+dns-default-wht5c     2/2     Running   0          3h10m
+node-resolver-c6njj   1/1     Running   0          3h10m
+node-resolver-j59r9   1/1     Running   0          3h10m
+node-resolver-kcbrb   1/1     Running   0          173m
+node-resolver-nx48k   1/1     Running   0          3h10m
+node-resolver-p7z2b   1/1     Running   0          173m
+  
+[jegan@tektutor.org ~]$ oc get po -n openshift-dns -o wide
+NAME                  READY   STATUS    RESTARTS   AGE     IP                NODE                              NOMINATED NODE   READINESS GATES
+dns-default-47l8t     2/2     Running   0          3h10m   10.128.0.4        master-1.ocp4.tektutor.org.labs   <none>           <none>
+dns-default-9nstb     2/2     Running   0          168m    10.131.0.3        worker-2.ocp4.tektutor.org.labs   <none>           <none>
+dns-default-nwbnz     2/2     Running   0          3h10m   10.130.0.6        master-3.ocp4.tektutor.org.labs   <none>           <none>
+dns-default-q8wbm     2/2     Running   0          168m    10.128.2.3        worker-1.ocp4.tektutor.org.labs   <none>           <none>
+dns-default-wht5c     2/2     Running   0          3h10m   10.129.0.24       master-2.ocp4.tektutor.org.labs   <none>           <none>
+node-resolver-c6njj   1/1     Running   0          3h10m   192.168.122.20    master-1.ocp4.tektutor.org.labs   <none>           <none>
+node-resolver-j59r9   1/1     Running   0          3h10m   192.168.122.211   master-2.ocp4.tektutor.org.labs   <none>           <none>
+node-resolver-kcbrb   1/1     Running   0          173m    192.168.122.228   worker-1.ocp4.tektutor.org.labs   <none>           <none>
+node-resolver-nx48k   1/1     Running   0          3h10m   192.168.122.194   master-3.ocp4.tektutor.org.labs   <none>           <none>
+node-resolver-p7z2b   1/1     Running   0          173m    192.168.122.56    worker-2.ocp4.tektutor.org.labs   <none>           <none>
+  
+[jegan@tektutor.org ~]$ oc get po -n openshift-dns -o wide | grep dns-default
+dns-default-47l8t     2/2     Running   0          3h10m   10.128.0.4        master-1.ocp4.tektutor.org.labs   <none>           <none>
+dns-default-9nstb     2/2     Running   0          168m    10.131.0.3        worker-2.ocp4.tektutor.org.labs   <none>           <none>
+dns-default-nwbnz     2/2     Running   0          3h10m   10.130.0.6        master-3.ocp4.tektutor.org.labs   <none>           <none>
+dns-default-q8wbm     2/2     Running   0          168m    10.128.2.3        worker-1.ocp4.tektutor.org.labs   <none>           <none>
+dns-default-wht5c     2/2     Running   0          3h10m   10.129.0.24       master-2.ocp4.tektutor.org.labs   <none>           <none>
+  
+[jegan@tektutor.org ~]$ oc describe svc/dns-default -n openshift-dns
+Name:              dns-default
+Namespace:         openshift-dns
+Labels:            dns.operator.openshift.io/owning-dns=default
+Annotations:       service.alpha.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1713237245
+                   service.beta.openshift.io/serving-cert-secret-name: dns-default-metrics-tls
+                   service.beta.openshift.io/serving-cert-signed-by: openshift-service-serving-signer@1713237245
+Selector:          dns.operator.openshift.io/daemonset-dns=default
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                172.30.0.10
+IPs:               172.30.0.10
+Port:              dns  53/UDP
+TargetPort:        dns/UDP
+Endpoints:         10.128.0.4:5353,10.128.2.3:5353,10.129.0.24:5353 + 2 more...
+Port:              dns-tcp  53/TCP
+TargetPort:        dns-tcp/TCP
+Endpoints:         10.128.0.4:5353,10.128.2.3:5353,10.129.0.24:5353 + 2 more...
+Port:              metrics  9154/TCP
+TargetPort:        metrics/TCP
+Endpoints:         10.128.0.4:9154,10.128.2.3:9154,10.129.0.24:9154 + 2 more...
+Session Affinity:  None
+Events:            <none>  
+</pre>
