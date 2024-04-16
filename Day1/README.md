@@ -984,8 +984,9 @@ nginx-94c4bd68b-lt4x2   1/1     Running             0          55m
 nginx-94c4bd68b-tc2kz   1/1     Running             0          30m
 test-69cc49bb5c-k9f4s   0/1     ContainerCreating   0          3s
 test-69cc49bb5c-k9f4s   1/1     Running             0          22s
-  
-^C[jegan@tektutor.org ~]$ oc rsh po/test-69cc49bb5c-k9f4s
+</pre>
+```
+[jegan@tektutor.org ~]$ oc rsh po/test-69cc49bb5c-k9f4s
 sh-4.4$ curl http://nginx:8080
 <!DOCTYPE html>
 <html>
@@ -1012,6 +1013,8 @@ Commercial support is available at
 <p><em>Thank you for using nginx.</em></p>
 </body>
 </html>
+```
+<pre>
 sh-4.4$ 
 sh-4.4$ cat /etc/resolv.conf 
 search jegan.svc.cluster.local svc.cluster.local cluster.local ocp4.tektutor.org.labs
