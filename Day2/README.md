@@ -6,6 +6,13 @@ Kubernetes/Openshift supports deploying and managing application in two style
 1. Imperative style ( using commands )
 2. Using source code/manifest files(yaml files)
 
+Deleting existing deployments
+```
+oc project jegan
+oc get all
+oc delete deploy/nginx svc/nginx
+```
+
 Let's auto-generate yaml file to deploy nginx into openshift declaratively
 ```
 oc create deploy nginx --image=bitnami/nginx --replicas=3 --dry-run=client -o yaml
