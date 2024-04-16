@@ -287,7 +287,7 @@ oc describe ingresscontroller/default -n openshift-ingress-operator | grep Domai
 Expected output
 <pre>
 oc describe ingresscontroller/default -n openshift-ingress-operator | grep Domain:
-  Domain:                  apps.ocp4.tektutor.org.labs  
+  Domain:                  apps.ocp4.rpsconsulting.in  
 </pre>
 
 You need to update the ingress.yml file and replace host url to tektutor.apps.ocp4.rpsconsulting.in
