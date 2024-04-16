@@ -1,5 +1,12 @@
 # Day 1
 
+## Cloning TekTutor Openshift Training Repository
+```
+cd ~
+git clone https://github.com/tektutor/openshift-april-2024.git
+cd openshift-april-2024
+```
+
 ## Troubleshooting RPS Cloud Login
 ```
 - The user-id that was shared to you seems to miss letter 'u', so you need to type your username as 24MAN0113-u25.
