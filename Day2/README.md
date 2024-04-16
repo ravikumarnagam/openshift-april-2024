@@ -179,6 +179,8 @@ Expected output
 
 
 ## Lab - Creating a route to expose your application to access them outside the cluster
+In Openshift, to expose a service within the cluster ClusterIP service is created and for external use route is created. 
+
 ```
 oc get all
 oc expose deploy/nginx --port=8080
