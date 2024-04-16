@@ -176,3 +176,70 @@ Expected output
 <pre>
   
 </pre>
+
+
+## Lab - Creating a route to expose your application to access them outside the cluster
+```
+oc get all
+oc expose deploy/nginx --port=8080
+oc get svc
+oc expose svc/nginx
+oc get routes
+curl http://nginx-jegan.apps.ocp4.tektutor.org.labs
+```
+
+Expected output
+```
+[root@tektutor.org declarative-manifest-scripts]# oc get all
+Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavailable in v4.10000+
+NAME                        READY   STATUS    RESTARTS   AGE
+pod/nginx-94c4bd68b-7gcfp   1/1     Running   0          30m
+pod/nginx-94c4bd68b-lsqqg   1/1     Running   0          30m
+pod/nginx-94c4bd68b-r55ns   1/1     Running   0          30m
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   3/3     3            3           30m
+
+NAME                              DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-94c4bd68b   3         3         3       30m
+
+[root@tektutor.org declarative-manifest-scripts]# oc expose deploy/nginx --port=8080
+service/nginx exposed
+[root@tektutor.org declarative-manifest-scripts]# oc get svc
+NAME    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+nginx   ClusterIP   172.30.134.110   <none>        8080/TCP   4s
+
+[root@tektutor.org declarative-manifest-scripts]# oc expose svc/nginx
+route.route.openshift.io/nginx exposed
+
+[root@tektutor.org declarative-manifest-scripts]# oc get route
+NAME    HOST/PORT                                 PATH   SERVICES   PORT   TERMINATION   WILDCARD
+nginx   nginx-jegan.apps.ocp4.tektutor.org.labs          nginx      8080                 None
+
+[root@tektutor.org declarative-manifest-scripts]# curl http://nginx-jegan.apps.ocp4.tektutor.org.labs
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+```
