@@ -39,6 +39,10 @@ oc get po
 oc get all
 oc delete -f nginx-deploy.yml
 oc get all
+oc expose deploy/nginx --type=ClusterIP --port=8080 --dry-run=client -o yaml > nginx-clusterip-svc.yml
+oc expose deploy/nginx --type=ClusterIP --port=8080 --dry-run=client -o yaml > nginx-nodeport-svc.yml
+oc expose deploy/nginx --type=ClusterIP --port=8080 --dry-run=client -o yaml > nginx-lb-svc.yml
+ls -l
 ```
 
 Expected output
@@ -66,4 +70,70 @@ deployment.apps "nginx" deleted
 [root@tektutor.org declarative-manifest-scripts]# oc get all
 Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavailable in v4.10000+
 No resources found in jegan namespace.  
+</pre>
+
+## Lab - Auto-generating service manifests file to create them declaratively later
+```
+ls
+oc apply -f nginx-deploy.yml
+oc get all
+oc expose deploy/nginx --type=ClusterIP --port=8080 --dry-run=client -o yaml
+
+```
+
+Expected output
+<pre>
+[root@tektutor.org declarative-manifest-scripts]# ls
+nginx-deploy.yml
+  
+[root@tektutor.org declarative-manifest-scripts]# oc apply -f nginx-deploy.yml 
+deployment.apps/nginx created
+  
+[root@tektutor.org declarative-manifest-scripts]# oc get all
+Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavailable in v4.10000+
+NAME                        READY   STATUS              RESTARTS   AGE
+pod/nginx-94c4bd68b-96ttl   1/1     Running             0          3s
+pod/nginx-94c4bd68b-m6zl6   0/1     ContainerCreating   0          3s
+pod/nginx-94c4bd68b-pnvpx   1/1     Running             0          3s
+pod/nginx-94c4bd68b-rbpfm   1/1     Running             0          3s
+pod/nginx-94c4bd68b-rtrm8   1/1     Running             0          3s
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   4/5     5            4           3s
+
+NAME                              DESIRED   CURRENT   READY   AGE
+[root@tektutor.org declarative-manifest-scripts]# oc expose deploy/nginx --type=ClusterIP --port=8080 --dry-run=client -o yaml
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: nginx
+  type: ClusterIP
+status:
+  loadBalancer: {}
+  
+[root@tektutor.org declarative-manifest-scripts]# oc expose deploy/nginx --type=ClusterIP --port=8080 --dry-run=client -o yaml > nginx-clusterip-svc.yml
+  
+[root@tektutor.org declarative-manifest-scripts]# ls
+nginx-clusterip-svc.yml  nginx-deploy.yml
+  
+[root@tektutor.org declarative-manifest-scripts]# oc expose deploy/nginx --type=NodePort --port=8080 --dry-run=client -o yaml > nginx-nodeport-svc.yml
+  
+[root@tektutor.org declarative-manifest-scripts]# oc expose deploy/nginx --type=LoadBalancer --port=8080 --dry-run=client -o yaml > nginx-lb-svc.yml
+  
+[root@tektutor.org declarative-manifest-scripts]# ls -l
+total 16
+-rw-r--r-- 1 root root 245 Apr 16 14:26 nginx-clusterip-svc.yml
+-rw-r--r-- 1 root root 293 Apr 16 14:19 nginx-deploy.yml
+-rw-r--r-- 1 root root 248 Apr 16 14:27 nginx-lb-svc.yml
+-rw-r--r-- 1 root root 244 Apr 16 14:26 nginx-nodeport-svc.yml
 </pre>
