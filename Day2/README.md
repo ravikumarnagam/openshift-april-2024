@@ -272,3 +272,25 @@ Rule 2 - https://www.tektutor.org/logout
   - this should be forwarded to logout service (openshift service - clusterip,nodeport,loadbalancer)
 
 Ingress Controller has to pick the above Ingress rules, and it will configure a Load Balancer 
+
+## Lab - Understanding Ingress
+```
+cd ~/openshift-april-2024
+git pull
+cd Day2/ingress
+
+oc apply -f nginx-deploy.yml
+oc apply -f hello-deploy.yml
+oc get deploy,rs,po
+
+oc apply -f nginx-clusterip-svc.yml
+oc apply -f hello-clusterip-svc.yml
+oc get svc
+
+oc apply -f ingress.yml
+oc get ingress
+oc describe ingress/tektutor
+
+curl http://tektutor.apps.ocp.tektutor.org.labs/nginx
+curl http://tektutor.apps.ocp.tektutor.org.labs/hello
+```
