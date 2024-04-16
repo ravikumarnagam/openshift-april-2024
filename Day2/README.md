@@ -249,9 +249,9 @@ Commercial support is available at
 ## Ingress
 <pre>
 - is a routing/forwarding rule
-- routing forwarding rule we can using a kubernetes/openshift resource called Ingress
-- there is controller which manages Ingress resources called Ingress Controller
-- Ingress Controller which is part of Openshift/Kubernetes, constantly monitors for new Ingress resources created anywhere in the openshift cluster
+- we can define routing forwarding rule using a kubernetes/openshift resource called Ingress
+- there is a controller which manages Ingress resources called Ingress Controller
+- Openshift Ingress Controller constantly monitors new Ingress resources created anywhere in the openshift cluster
 - Whenever the Ingress Controller get to know about a new Ingress resource, it fetches ingress routing rules and then it configures the Load balancer with those routing rules
 
 - For an Ingress to work, we need 3 types of resources
@@ -287,8 +287,10 @@ oc describe ingresscontroller/default -n openshift-ingress-operator | grep Domai
 Expected output
 <pre>
 oc describe ingresscontroller/default -n openshift-ingress-operator | grep Domain:
-  Domain:                  apps.ocp4.tektutor.org.labs  
+  Domain:                  apps.ocp4.rpsconsulting.in  
 </pre>
+
+You need to update the ingress.yml file and replace host url to tektutor.apps.ocp4.rpsconsulting.in
 
 ```
 cd ~/openshift-april-2024
@@ -307,6 +309,40 @@ oc apply -f ingress.yml
 oc get ingress
 oc describe ingress/tektutor
 
-curl http://tektutor.apps.ocp.tektutor.org.labs/nginx
-curl http://tektutor.apps.ocp.tektutor.org.labs/hello
+curl http://tektutor.apps.ocp4.rpsconsulting.in/nginx
+curl http://tektutor.apps.ocp4.rpsconsulting.in/hello
 ```
+
+## Info - What is Persistent Volume (PV)?
+- is an external storage created by System Administrator (openshift administrator)
+- the Persistent volumes are created in the cluster scope, hence it can be claimed and used by any openshift project
+- the Persistent volumes will refer to externals disk created from resources like
+  - NFS Storage ( In our case we will use NFS shared external storage )
+  - AWS EBS
+  - Azure Storage
+- In our lab, each server
+  - Server 1 (10.10.15.60) has its own NFS Server (user01 to user09)
+  - Server 2 (10.10.15.63) has its own NFS Server (user10 to user17)
+  - Server 3 (10.10.15.64) has its own NFS Server (user18 to user25)
+- You can list the NFS shared folder with the command
+  ```
+  showmount -e | grep user01
+  showmount -e | grep user18
+  showmount -e | grep user25
+  ```
+- Persistent volume we create in Openshift will be making use of NFS Shared folders
+- Persistent Volume normally will have the below attributes
+  - Size in MB/GB/TB/MiB/GiB/TiB
+  - AccessMode - ReadWriteOnce, ReadWriteMany, etc
+  - StorageClass - optional ( NFS, AWS, Azure, etc.,)
+  - Label selector - optional
+    
+## Info - What is Persistent Volume Claim (PVC)?
+- any application that runs in Openshift/Kubernetes if they need external storage they have to request the openshift cluster by creating Persistent volume claims (PVC)
+- When application request for external storage by creating PVC, the PVC will also mention the below attributes
+  - Size
+  - AccessMode
+  - StorageClass - optional
+  - Label selector - optional
+- If openshift storage controller finds a matching Persistent Volume, then it will let the PVC claim and use the Persistent Volume
+- The application deploying that refers the PVC can make use of the external storage by mentioning the PVC name
