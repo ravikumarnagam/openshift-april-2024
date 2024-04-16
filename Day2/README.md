@@ -273,6 +273,11 @@ Rule 2 - https://www.tektutor.org/logout
 
 Ingress Controller has to pick the above Ingress rules, and it will configure a Load Balancer 
 
+You can refer my medium blog about Ingress here
+<pre>
+https://medium.com/@jegan_50867/redhat-openshift-ingress-e91f27a35773  
+</pre>
+
 ## Lab - Understanding Ingress
 You need to find your openshift cluster domain and adjust the host url accordingly
 ```
