@@ -274,6 +274,17 @@ Rule 2 - https://www.tektutor.org/logout
 Ingress Controller has to pick the above Ingress rules, and it will configure a Load Balancer 
 
 ## Lab - Understanding Ingress
+You need to find your openshift cluster domain and adjust the host url accordingly
+```
+oc describe ingresscontroller/default -n openshift-ingress-operator | grep Domain:
+```
+
+Expected output
+<pre>
+oc describe ingresscontroller/default -n openshift-ingress-operator | grep Domain:
+  Domain:                  apps.ocp4.tektutor.org.labs  
+</pre>
+
 ```
 cd ~/openshift-april-2024
 git pull
