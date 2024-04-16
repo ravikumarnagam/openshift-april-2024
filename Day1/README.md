@@ -910,3 +910,54 @@ The below chain of activities happens within openshift
   - ...
   - 172.17.255.255
   - Total number of IP address in 172.17.0.0/16 = 256 x 256 = 65535 IP addresses
+
+## Lab - Creating an internal ClusterIP service for existing nginx deployment
+```
+oc get po -o wide
+oc expose deploy/nginx --type=ClusterIP --port=8080
+oc get services
+oc get service
+oc get svc
+oc describe svc/nginx
+```
+
+Expected output
+<pre>
+[jegan@tektutor.org ~]$ oc get po -o wide
+NAME                    READY   STATUS    RESTARTS   AGE   IP            NODE                              NOMINATED NODE   READINESS GATES
+nginx-94c4bd68b-9vwn5   1/1     Running   0          26s   10.128.2.6    worker-1.ocp4.tektutor.org.labs   <none>           <none>
+nginx-94c4bd68b-gmddr   1/1     Running   0          26s   10.131.0.13   worker-2.ocp4.tektutor.org.labs   <none>           <none>
+nginx-94c4bd68b-lt4x2   1/1     Running   0          26s   10.129.0.85   master-2.ocp4.tektutor.org.labs   <none>           <none>
+  
+[jegan@tektutor.org ~]$ oc expose deploy/nginx --type=ClusterIP --port=8080
+service/nginx exposed
+  
+[jegan@tektutor.org ~]$ oc get services
+NAME    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+nginx   ClusterIP   172.30.110.180   <none>        8080/TCP   5s
+  
+[jegan@tektutor.org ~]$ oc get service
+NAME    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+nginx   ClusterIP   172.30.110.180   <none>        8080/TCP   8s
+  
+[jegan@tektutor.org ~]$ oc get svc
+NAME    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+nginx   ClusterIP   172.30.110.180   <none>        8080/TCP   9s
+  
+[jegan@tektutor.org ~]$ oc describe svc/nginx
+Name:              nginx
+Namespace:         jegan
+Labels:            app=nginx
+Annotations:       <none>
+Selector:          app=nginx
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                172.30.110.180
+IPs:               172.30.110.180
+Port:              <unset>  8080/TCP
+TargetPort:        8080/TCP
+Endpoints:         10.128.2.6:8080,10.129.0.85:8080,10.131.0.13:8080
+Session Affinity:  None
+Events:            <none>  
+</pre>
