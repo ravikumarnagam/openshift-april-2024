@@ -248,7 +248,7 @@ Commercial support is available at
 
 ## Ingress
 <pre>
-- is a routing forward rule
+- is a routing/forwarding rule
 - routing forwarding rule we can using a kubernetes/openshift resource called Ingress
 - there is controller which manages Ingress resources called Ingress Controller
 - Ingress Controller which is part of Openshift/Kubernetes, constantly monitors for new Ingress resources created anywhere in the openshift cluster
