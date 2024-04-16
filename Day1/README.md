@@ -1,5 +1,10 @@
 # Day 1
 
+## First day feedback
+<pre>
+https://survey.zohopublic.com/zs/wn0NmU  
+</pre>
+
 ## Cloning TekTutor Openshift Training Repository
 ```
 cd ~
