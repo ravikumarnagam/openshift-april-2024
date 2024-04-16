@@ -1330,5 +1330,6 @@ exit
 - When we prefer an external load balancer to route the calls to our Pods running in Openshift, we can opt for LoadBalancer
 - When we use clusterip or nodeport, the load balancing is taken care by kube-proxy that runs in every node on our openshift cluster, so there is no extra cost but there will an extra cost for load balancer service in public cloud
 - the advantage of using loadservice is, the public url will look very user-friendly as opposed to node-port external service
-- to support load balancer service in an on-prem openshift setup, we need to install MetalLB operator in Openshift clsuter, for detailed instruction you can refer my blog at https://medium.com/tektutor/using-metallb-loadbalancer-with-bare-metal-openshift-onprem-4230944bfa35
+- to support load balancer service in an on-prem openshift setup, we need to install MetalLB operator in Openshift clsuter, for detailed instruction you can refer my blog at 
+- https://medium.com/tektutor/using-metallb-loadbalancer-with-bare-metal-openshift-onprem-4230944bfa35
 </pre>
