@@ -254,7 +254,7 @@ Commercial support is available at
 - Ingress Controller which is part of Openshift/Kubernetes, constantly monitors for new Ingress resources created anywhere in the openshift cluster
 - Whenever the Ingress Controller get to know about a new Ingress resource, it fetches ingress routing rules and then it configures the Load balancer with those routing rules
 
-- For a Ingress to work, we need 3 types of resources
+- For an Ingress to work, we need 3 types of resources
   1. Ingress ( Routing rule )
   2. Ingress Controller
      - This can be Nginx Ingress Controller or
