@@ -1089,7 +1089,7 @@ Session Affinity:  None
 Events:            <none>  
 </pre>
 
-## Lab - Creating an external NodePort serivce for exiting nginx deployment
+## Lab - Creating an external NodePort service for exiting nginx deployment
 ```
 oc get services
 oc delete svc/nginx
