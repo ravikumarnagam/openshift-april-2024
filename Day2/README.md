@@ -34,3 +34,10 @@ oc apply -f nginx-deploy.yml
 oc get po
 ```
 
+## Lab - Deleting a deployment in declarative style
+```
+oc get all
+oc delete -f nginx-deploy.yml
+oc get all
+```
+
