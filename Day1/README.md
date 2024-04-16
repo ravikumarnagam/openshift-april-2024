@@ -1270,3 +1270,54 @@ Commercial support is available at
 </body>
 </html>
 ```
+
+## Lab - Does the NodePort service support service discovery
+Service Discovery - accessing a service using its name.  This works only within the cluster scope.  Hence, we can access any service by its name from any Pod shell.  Openshift DNS helps in resolving the service name to its corresponding service IP.
+
+The kubelet container agent when it creates container for a Pod, it also configures the /etc/resolv.conf file with the openshift DNS service IP - 172.30.0.10
+
+```
+oc get po
+oc rsh po/test-69cc49bb5c-k9f4s
+curl http://nginx:8080
+```
+
+Expected output
+```
+[jegan@tektutor.org ~]$ oc get po
+NAME                    READY   STATUS    RESTARTS   AGE
+nginx-94c4bd68b-gm74l   1/1     Running   0          11m
+nginx-94c4bd68b-lg66x   1/1     Running   0          11m
+nginx-94c4bd68b-lv5zd   1/1     Running   0          11m
+test-69cc49bb5c-k9f4s   1/1     Running   0          30m
+  
+[jegan@tektutor.org ~]$ oc rsh po/test-69cc49bb5c-k9f4s
+sh-4.4$ curl http://nginx:8080
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+sh-4.4$ exit
+exit  
+```
