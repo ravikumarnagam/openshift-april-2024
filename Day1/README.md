@@ -1,5 +1,12 @@
 # Day 1
 
+## Cloning TekTutor Openshift Training Repository
+```
+cd ~
+git clone https://github.com/tektutor/openshift-april-2024.git
+cd openshift-april-2024
+```
+
 ## Troubleshooting RPS Cloud Login
 ```
 - The user-id that was shared to you seems to miss letter 'u', so you need to type your username as 24MAN0113-u25.
@@ -1333,3 +1340,13 @@ exit
 - to support load balancer service in an on-prem openshift setup, we need to install MetalLB operator in Openshift clsuter, for detailed instruction you can refer my blog at 
 - https://medium.com/tektutor/using-metallb-loadbalancer-with-bare-metal-openshift-onprem-4230944bfa35
 </pre>
+
+In each server, one participant can configure the below
+```
+cd ~/openshift-april-2024
+git pull
+cd Day1/metallb
+oc apply -f address-pool.yml
+oc apply -f metallb.yml
+oc get svc
+```
