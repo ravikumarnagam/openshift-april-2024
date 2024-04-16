@@ -346,3 +346,16 @@ curl http://tektutor.apps.ocp4.rpsconsulting.in/hello
   - Label selector - optional
 - If openshift storage controller finds a matching Persistent Volume, then it will let the PVC claim and use the Persistent Volume
 - The application deploying that refers the PVC can make use of the external storage by mentioning the PVC name
+
+## Lab - Deploying mariab with Persistent Volume and Claims
+```
+cd ~/openshift-april-2024
+git pull
+cd Day2/persistent-volumes-and-claims/
+
+oc apply -f mariadb-pv.yml
+oc apply -f mariadb-pvc.yml
+oc apply -f mariadb-deploy.yml
+
+oc get po -w
+```
