@@ -1088,3 +1088,180 @@ Endpoints:         10.128.0.4:9154,10.128.2.3:9154,10.129.0.24:9154 + 2 more...
 Session Affinity:  None
 Events:            <none>  
 </pre>
+
+## Lab - Creating an external NodePort serivce for exiting nginx deployment
+```
+oc get services
+oc delete svc/nginx
+oc expose deploy/nginx --type=NodePort --port=8080
+oc get svc
+oc get nodes -o wide
+curl master-1.ocp4.tektutor.org.labs:31522
+curl master-2.ocp4.tektutor.org.labs:31522
+curl master-3.ocp4.tektutor.org.labs:31522
+curl worker-1.ocp4.tektutor.org.labs:31522
+curl worker-2.ocp4.tektutor.org.labs:31522
+
+oc scale deploy/nginx --replicas=0
+oc get po -w
+oc scale deploy/nginx --replicas=0
+oc get po
+
+curl master-1.ocp4.tektutor.org.labs:31522
+curl master-2.ocp4.tektutor.org.labs:31522
+curl master-3.ocp4.tektutor.org.labs:31522
+curl worker-1.ocp4.tektutor.org.labs:31522
+curl worker-2.ocp4.tektutor.org.labs:31522
+```
+
+Expected output
+```
+[jegan@tektutor.org ~]$ oc get services
+NAME    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+nginx   ClusterIP   172.30.110.180   <none>        8080/TCP   68m
+
+[jegan@tektutor.org ~]$ oc delete svc/nginx
+service "nginx" deleted
+
+[jegan@tektutor.org ~]$ oc expose deploy/nginx --type=NodePort --port=8080
+service/nginx exposed
+
+[jegan@tektutor.org ~]$ oc get svc
+NAME    TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+nginx   NodePort   172.30.8.205   <none>        8080:31522/TCP   3s
+
+[jegan@tektutor.org ~]$ oc get nodes -o wide
+NAME                              STATUS   ROLES                         AGE     VERSION            INTERNAL-IP       EXTERNAL-IP   OS-IMAGE                                                       KERNEL-VERSION                 CONTAINER-RUNTIME
+master-1.ocp4.tektutor.org.labs   Ready    control-plane,master,worker   3h28m   v1.27.11+749fe1d   192.168.122.20    <none>        Red Hat Enterprise Linux CoreOS 414.92.202403270157-0 (Plow)   5.14.0-284.59.1.el9_2.x86_64   cri-o://1.27.4-6.1.rhaos4.14.gitd09e4c0.el9
+master-2.ocp4.tektutor.org.labs   Ready    control-plane,master,worker   3h28m   v1.27.11+749fe1d   192.168.122.211   <none>        Red Hat Enterprise Linux CoreOS 414.92.202403270157-0 (Plow)   5.14.0-284.59.1.el9_2.x86_64   cri-o://1.27.4-6.1.rhaos4.14.gitd09e4c0.el9
+master-3.ocp4.tektutor.org.labs   Ready    control-plane,master,worker   3h28m   v1.27.11+749fe1d   192.168.122.194   <none>        Red Hat Enterprise Linux CoreOS 414.92.202403270157-0 (Plow)   5.14.0-284.59.1.el9_2.x86_64   cri-o://1.27.4-6.1.rhaos4.14.gitd09e4c0.el9
+worker-1.ocp4.tektutor.org.labs   Ready    worker                        3h6m    v1.27.11+749fe1d   192.168.122.228   <none>        Red Hat Enterprise Linux CoreOS 414.92.202403270157-0 (Plow)   5.14.0-284.59.1.el9_2.x86_64   cri-o://1.27.4-6.1.rhaos4.14.gitd09e4c0.el9
+worker-2.ocp4.tektutor.org.labs   Ready    worker                        3h6m    v1.27.11+749fe1d   192.168.122.56    <none>        Red Hat Enterprise Linux CoreOS 414.92.202403270157-0 (Plow)   5.14.0-284.59.1.el9_2.x86_64   cri-o://1.27.4-6.1.rhaos4.14.gitd09e4c0.el9
+
+[jegan@tektutor.org ~]$ curl master-1.ocp4.tektutor.org.labs:31522
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+[jegan@tektutor.org ~]$ curl master-2.ocp4.tektutor.org.labs:31522
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+[jegan@tektutor.org ~]$ curl master-3.ocp4.tektutor.org.labs:31522
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+[jegan@tektutor.org ~]$ oc get deploy
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+nginx   5/5     5            5           73m
+test    1/1     1            1           18m
+
+[jegan@tektutor.org ~]$ oc scale deploy/nginx --replicas=0
+deployment.apps/nginx scaled
+
+[jegan@tektutor.org ~]$ oc get po -w
+NAME                    READY   STATUS    RESTARTS   AGE
+test-69cc49bb5c-k9f4s   1/1     Running   0          18m
+^C[jegan@tektutor.org ~]$ oc scale deploy/nginx --replicas=3
+deployment.apps/nginx scaled
+
+[jegan@tektutor.org ~]$ oc get po -w
+NAME                    READY   STATUS              RESTARTS   AGE
+nginx-94c4bd68b-gm74l   0/1     ContainerCreating   0          2s
+nginx-94c4bd68b-lg66x   1/1     Running             0          2s
+nginx-94c4bd68b-lv5zd   1/1     Running             0          2s
+test-69cc49bb5c-k9f4s   1/1     Running             0          18m
+nginx-94c4bd68b-gm74l   1/1     Running             0          3s
+
+^C[jegan@tektutor.org ~]curl worker-1.ocp4.tektutor.org.labs:31522
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+```
