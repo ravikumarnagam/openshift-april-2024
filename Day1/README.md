@@ -236,8 +236,11 @@ What is the minimum number of physical servers required to support 1000 Virtual 
 - OpenShift upto v3.x it was using Docker (runC) containers only
 - OpenShift v4.x onwards it stopped support for Docker and replaced Docker with Podman(CRI-O)
 
-## Red Hat OpenShift Architecture
+## Docker High-level architecture
+![Docker Architecture](DockerHighLevelArchitecture.png)
 
+## Red Hat OpenShift Architecture
+![Openshift architecture](openshift-architecture.png)
 ## Master Node - Control Plane Components
 - Control Plane Components runs only on the master nodes
 - Control Plane Components
