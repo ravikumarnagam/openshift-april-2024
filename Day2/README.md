@@ -20,3 +20,17 @@ oc create deploy nginx --image=bitnami/nginx --replicas=3 --dry-run=client -o ya
 oc apply -f nginx-deploy.yml
 oc get deploy,rs,po
 ```
+
+## Lab - Scale up nginx deployment pod counts to 5 from 3
+```
+oc get po
+```
+
+Edit the nginx-deploy.yml file and update the replicas from 3 to 5 and save it.
+
+Now you may apply as shown below to scale up the nginx deployment to create a total of 5 pods
+```
+oc apply -f nginx-deploy.yml
+oc get po
+```
+
