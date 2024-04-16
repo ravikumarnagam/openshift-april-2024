@@ -245,3 +245,30 @@ Commercial support is available at
 </body>
 </html>
 ```
+
+## Ingress
+<pre>
+- is a routing forward rule
+- routing forwarding rule we can using a kubernetes/openshift resource called Ingress
+- there is controller which manages Ingress resources called Ingress Controller
+- Ingress Controller which is part of Openshift/Kubernetes, constantly monitors for new Ingress resources created anywhere in the openshift cluster
+- Whenever the Ingress Controller get to know about a new Ingress resource, it fetches ingress routing rules and then it configures the Load balancer with those routing rules
+
+- For a Ingress to work, we need 3 types of resources
+  1. Ingress ( Routing rule )
+  2. Ingress Controller
+     - This can be Nginx Ingress Controller or
+     - can be HAProxy Ingress Controller
+  3. Load Balancer ( HAProxy or Nginx )
+</pre>
+
+Let's there is a home for Tektutor website
+
+Ingress (Routing rule)
+Home Page - http://www.tektutor.org
+Rule 1 - http://www.tektutor.org/trainings
+  - this should be forwarded to training service (openshift service - clusterip,nodeport,loadbalancer)
+Rule 2 - https://www.tektutor.org/logout
+  - this should be forwarded to logout service (openshift service - clusterip,nodeport,loadbalancer)
+
+Ingress Controller has to pick the above Ingress rules, and it will configure a Load Balancer 
