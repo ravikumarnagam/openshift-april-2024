@@ -290,6 +290,8 @@ oc describe ingresscontroller/default -n openshift-ingress-operator | grep Domai
   Domain:                  apps.ocp4.tektutor.org.labs  
 </pre>
 
+You need to update the ingress.yml file and replace host url to tektutor.apps.ocp4.rpsconsulting.in
+
 ```
 cd ~/openshift-april-2024
 git pull
@@ -307,6 +309,6 @@ oc apply -f ingress.yml
 oc get ingress
 oc describe ingress/tektutor
 
-curl http://tektutor.apps.ocp.tektutor.org.labs/nginx
-curl http://tektutor.apps.ocp.tektutor.org.labs/hello
+curl http://tektutor.apps.ocp4.rpsconsulting.in/nginx
+curl http://tektutor.apps.ocp4.rpsconsulting.in/hello
 ```
