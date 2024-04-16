@@ -915,6 +915,11 @@ The below chain of activities happens within openshift
   - Total number of IP address in 172.17.0.0/16 = 256 x 256 = 65535 IP addresses
 
 ## Lab - Creating an internal ClusterIP service for existing nginx deployment
+
+Kubernetes/OpenShift reserves the port range 30000-32767 for the NodePort services. For each NodePort service we create, Openshift will pick one conflicting port from the above range and opens the port on all nodes in the cluster for that particular NodePort external service.
+
+We can access the Nodeport service using either http://NodeIP:Node-port or http://NodeName:Node-port.
+
 ```
 oc get po -o wide
 oc expose deploy/nginx --type=ClusterIP --port=8080
