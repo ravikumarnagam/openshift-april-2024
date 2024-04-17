@@ -32,7 +32,15 @@ oc apply -f openshift-helloms-svc.yml
 oc apply -f openshift-helloms-route.yml
 ```
 
+You can connect to mariadb pod shell as shown below, when it prompts for password type 'root@123'
+```
+mysql -u root -p
+```
+
 Before you try click on the openshift-helloms application route, you need to create a database tektutor and inside that database create greeting table with a single column called message varchar(200) and insert a single record with some message.
+
+
+
 
 Now you should be able to access the openshift helloms route from cli or web browser.  You need to use your route url which might look like http://openshift-hello-ms-<your-name>.apps.ocp4.rpsconsulting.in
 ```
