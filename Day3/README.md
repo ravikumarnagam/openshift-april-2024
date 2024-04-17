@@ -32,9 +32,20 @@ oc apply -f openshift-helloms-svc.yml
 oc apply -f openshift-helloms-route.yml
 ```
 
-Before you try click on the openshift-helloms application route, you need to create a database tektutor and inside that database create greeting table with a single column called message varchar(200) and insert a single record with some message.
+You can connect to mariadb pod shell as shown below, when it prompts for password type 'root@123'
+```
+oc rsh pod/mariadb-7889ddc665-9kskb
+mysql -u root -p
+CREATE DATABASE tektutor;
+USE tektutor;
+CREATE TABLE greeting ( message VARCHAR(100) NOT NULL );
+INSERT INTO greeting VALUES ( "Hello Microservice 1.0 !" );
+SELECT * FROM greeting;
+```
+
 
 Now you should be able to access the openshift helloms route from cli or web browser.  You need to use your route url which might look like http://openshift-hello-ms-<your-name>.apps.ocp4.rpsconsulting.in
 ```
+oc get route
 curl http://openshift-hello-ms-jegan.apps.ocp4.tektutor.org.labs
 ```
