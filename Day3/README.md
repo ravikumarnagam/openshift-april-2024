@@ -14,3 +14,27 @@ etcdctl get "/kubernetes.io/deployments/jegan/mariadb" --prefix=true
 etcdctl get "/kubernetes.io/pods/jegan/mariadb-8469c94c8b-tf65s" --prefix=true
 ```
 
+## Lab - Deploying a multipod java application that fetch data from mariadb databases
+```
+cd ~/openshift-april-2024
+git pull
+
+cd Day3/hello-microservice
+oc apply -f configmap.yml
+oc apply -f secrets.yml
+oc apply -f mariadb-pv.yml
+oc apply -f mariadb-pvc.yml
+oc apply -f mariadb-deploy.yml
+oc apply -f mariadb-svc.yml
+
+oc apply -f openshift-helloms-deploy.yml
+oc apply -f openshift-helloms-svc.yml
+oc apply -f openshift-helloms-route.yml
+```
+
+Before you try click on the openshift-helloms application route, you need to create a database tektutor and inside that database create greeting table with a single column called message varchar(200) and insert a single record with some message.
+
+Now you should be able to access the openshift helloms route from cli or web browser.
+```
+curl http://openshift-hello-ms-jegan.apps.ocp4.tektutor.org.labs
+```
