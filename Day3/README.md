@@ -17,6 +17,8 @@
   - ReplicationController and Deploymentconfig are deprecated in Openshift but exists for backward compatibility
 
 ## Installing Helm Kubernetes/OpenShift Package Manager
+Helm is already installed on Server1, Server2 and Server 3 for all users. Hence, the below instructions are just for your reference. This requires administrator privilege on the linux machine.
+
 ```
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 chmod 700 get_helm.sh
