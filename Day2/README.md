@@ -443,9 +443,22 @@ oc apply -f mariadb-deploy.yml
 oc get po -w
 ```
 
-You can get inside the mariadb po shell
+You can get inside the mariadb po shell, when prompts for password type 'root@123'
 ```
 mysql -u root -p
+SHOW DATABASES;
+CREATE DATABASE tektutor;
+USE tektutor;
+CREATE TABLE training ( id INT NOT NULL, name VARCHAR(250) NOT NULL, duration VARCHAR(250) NOT NULL, PRIMARY KEY(id));
+
+INSERT INTO training VALUES ( 1, "DevOps", "5 Days" );
+INSERT INTO training VALUES ( 2, "OpenShift", "5 Days" );
+INSERT INTO training VALUES ( 3, "Microservices", "5 Days" );
+
+SELECT * FROM training;
+
+exit
+exit
 ```
 
 ![mariadb](mariadb-1.png)
