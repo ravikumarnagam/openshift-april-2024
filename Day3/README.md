@@ -90,35 +90,52 @@ cd Day3/wordpress
 
 You can access the wordpress from Developer Context --> Topology and click on the route(up arrow) that appears on the wordpress deployment.  You are supposed to see the wordpress blog page.
 
+Once you are done with this lab exercise, it is recommended to delete the wordpress deployment to free up the resources
+
+```
+cd ~/openshift-april-2024
+git pull
+
+cd Day3/wordpress
+./delete.sh
+```
+
 ## Lab - Creating a daemonset
 
 This will create one nginx pod per node automatically. If additional nodes are added to the openshift cluster, the daemonset controller will automatically create a new pod and assign it on the new node, on the similar fashion if a node is removed from the cluseter, the daemonset pod get deleted automatically from the node.
 
+Example for Daemonset
+- kube-proxy that supports load-balancing functionality to the pods behind Service has to be deployed on each node ( One kube-proxy per node )
+- CoreDNS pod that supports service discovery functionality has to be deployed on each node ( one pod per node )
+- Prometheus pod that collects performance metrics has to be deployed on each node ( one pod per node )
+
+We will try to deploy one nginx pod per node by creating the below daemonset
 ```
 cd  ~/openshift-april-2024
 git pull
 
 cd Day3/daemonset
-
 oc apply -f nginx-ds.yml
 ```
 
 Expected output
 <pre>
-[root@tektutor.org Day3]# cd daemonset/
-[root@tektutor.org daemonset]# ls
+[root@tektutor.org Day3]# <b>cd daemonset/</b>
+[root@tektutor.org daemonset]# <b>ls</b>
 nginx-ds.yml
-[root@tektutor.org daemonset]# vim nginx-ds.yml 
-[root@tektutor.org daemonset]# oc apply -f nginx-ds.yml 
+  
+[root@tektutor.org daemonset]# <b>oc apply -f nginx-ds.yml</b>
 daemonset.apps/nginx created
-[root@tektutor.org daemonset]# oc get po
+  
+[root@tektutor.org daemonset]# <b>oc get po</b>
 NAME          READY   STATUS              RESTARTS   AGE
 nginx-f29f6   0/1     ContainerCreating   0          2s
 nginx-ffsqw   0/1     ContainerCreating   0          2s
 nginx-hgrdb   0/1     ContainerCreating   0          2s
 nginx-r97pv   0/1     ContainerCreating   0          2s
 nginx-zstvs   0/1     ContainerCreating   0          2s
-[root@tektutor.org daemonset]# oc get po -w -o wide
+  
+[root@tektutor.org daemonset]# <b>oc get po -w -o wide</b>
 NAME          READY   STATUS              RESTARTS   AGE   IP             NODE                              NOMINATED NODE   READINESS GATES
 nginx-f29f6   0/1     ContainerCreating   0          7s    <none>         master-1.ocp4.tektutor.org.labs   <none>           <none>
 nginx-ffsqw   1/1     Running             0          7s    10.131.0.82    worker-2.ocp4.tektutor.org.labs   <none>           <none>
@@ -127,14 +144,16 @@ nginx-r97pv   0/1     ContainerCreating   0          7s    <none>         master
 nginx-zstvs   1/1     Running             0          7s    10.129.0.218   master-2.ocp4.tektutor.org.labs   <none>           <none>
 nginx-f29f6   1/1     Running             0          15s   10.128.0.217   master-1.ocp4.tektutor.org.labs   <none>           <none>
 nginx-r97pv   1/1     Running             0          15s   10.130.0.68    master-3.ocp4.tektutor.org.labs   <none>           <none>
-^C[root@tektutor.org daemonset]# oc get po
+  
+^C[root@tektutor.org daemonset]# <b>oc get po</b>
 NAME          READY   STATUS    RESTARTS   AGE
 nginx-f29f6   1/1     Running   0          18s
 nginx-ffsqw   1/1     Running   0          18s
 nginx-hgrdb   1/1     Running   0          18s
 nginx-r97pv   1/1     Running   0          18s
 nginx-zstvs   1/1     Running   0          18s
-[root@tektutor.org daemonset]# cat nginx-ds.yml 
+  
+[root@tektutor.org daemonset]# <b>cat nginx-ds.yml</b>
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
