@@ -1,5 +1,80 @@
 # Day 2
 
+## Info - Troubleshooting web console
+In case, you are able to list the nodes in the openshift cluster but the web console is not accessible.
+
+```
+oc -n openshift-console get service
+oc -n openshift-console get pods
+
+oc -n openshift-ingress get pod -o json |
+  jq -r '.items[].metadata.name' |
+  xargs oc -n openshift-ingress delete pod
+
+oc -n openshift-console get pods -o wide -w
+
+oc -n openshifconsole get service
+
+oc get route --all-namespaces | grep console
+
+oc describe console -n openshift-console
+```
+
+<pre>
+[jegan@tektutor.org ~]$ oc -n openshift-console get service
+NAME        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+console     ClusterIP   172.30.93.1      <none>        443/TCP   19h
+downloads   ClusterIP   172.30.113.169   <none>        80/TCP    19h
+
+[jegan@tektutor.org ~]$ oc -n openshift-console get pods
+NAME                         READY   STATUS    RESTARTS   AGE
+console-7644f4994f-449vg     1/1     Running   0          19h
+console-7644f4994f-gm8qk     1/1     Running   0          19h
+downloads-86d9bcf76d-9tmjm   1/1     Running   0          19h
+downloads-86d9bcf76d-xzkm2   1/1     Running   0          19h
+
+[jegan@tektutor.org ~]$ oc -n openshift-ingress get pod -o json |
+  jq -r '.items[].metadata.name' |
+  xargs oc -n openshift-ingress delete pod
+pod "router-default-6fbc577945-lrcj5" deleted
+pod "router-default-6fbc577945-rhzv8" deleted
+pod "router-default-6fbc577945-zfgwp" deleted
+
+[jegan@tektutor.org ~]$ oc -n openshift-console get pods
+NAME                         READY   STATUS              RESTARTS   AGE
+console-7644f4994f-449vg     0/1     ContainerCreating   1          19h
+console-7644f4994f-gm8qk     0/1     ContainerCreating   1          19h
+downloads-86d9bcf76d-9tmjm   0/1     ContainerCreating   1          19h
+downloads-86d9bcf76d-xzkm2   0/1     ContainerCreating   1          19h
+
+[jegan@tektutor.org ~]$ oc -n openshift-console get pods -w
+NAME                         READY   STATUS              RESTARTS   AGE
+console-7644f4994f-449vg     0/1     ContainerCreating   1          19h
+console-7644f4994f-gm8qk     0/1     ContainerCreating   1          19h
+downloads-86d9bcf76d-9tmjm   0/1     ContainerCreating   1          19h
+downloads-86d9bcf76d-xzkm2   0/1     ContainerCreating   1          19h
+console-7644f4994f-449vg     0/1     Running             1          19h
+
+^C[jegan@tektutor.org ~]$ oc -n openshift-console get pods -w -o wide
+NAME                         READY   STATUS              RESTARTS   AGE   IP            NODE                              NOMINATED NODE   READINESS GATES
+console-7644f4994f-449vg     0/1     Running             1          19h   10.130.0.23   master-3.ocp4.tektutor.org.labs   <none>           <none>
+console-7644f4994f-gm8qk     0/1     ContainerCreating   1          19h   <none>        master-1.ocp4.tektutor.org.labs   <none>           <none>
+downloads-86d9bcf76d-9tmjm   0/1     ContainerCreating   1          19h   <none>        master-1.ocp4.tektutor.org.labs   <none>           <none>
+downloads-86d9bcf76d-xzkm2   0/1     ContainerCreating   1          19h   <none>        master-3.ocp4.tektutor.org.labs   <none>           <none>
+console-7644f4994f-449vg     1/1     Running             1          19h   10.130.0.23   master-3.ocp4.tektutor.org.labs   <none>           <none>
+console-7644f4994f-gm8qk     0/1     Running             1          19h   10.128.0.56   master-1.ocp4.tektutor.org.labs   <none>           <none>
+console-7644f4994f-gm8qk     1/1     Running             1          19h   10.128.0.56   master-1.ocp4.tektutor.org.labs   <none>           <none>
+
+^C[jegan@tektutor.org ~]$ oc -n openshifconsole get service
+NAME        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+console     ClusterIP   172.30.93.1      <none>        443/TCP   19h
+downloads   ClusterIP   172.30.113.169   <none>        80/TCP    19h
+
+[jegan@tektutor.org ~]$ oc get route --all-namespaces | grep console
+openshift-console          console                   console-openshift-console.apps.ocp4.tektutor.org.labs                                  console             https   reencrypt/Redirect     None
+openshift-console          downloads                 downloads-openshift-console.apps.ocp4.tektutor.org.labs                                downloads           http    edge/Redirect          None
+</pre>
+
 ## Lab - Deploying an application into openshift using declarative style(using yaml files)
 
 Kubernetes/Openshift supports deploying and managing application in two style
@@ -346,3 +421,97 @@ curl http://tektutor.apps.ocp4.rpsconsulting.in/hello
   - Label selector - optional
 - If openshift storage controller finds a matching Persistent Volume, then it will let the PVC claim and use the Persistent Volume
 - The application deploying that refers the PVC can make use of the external storage by mentioning the PVC name
+
+## Lab - Deploying mariab with Persistent Volume and Claims
+
+For more details on the PersistentVolume and PersistentVolumeClaim accessmode, you may refer the official documentation 
+<pre>
+https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes  
+</pre>
+
+
+Before you create the below resources, you need to edit mariadb-pv.yml mariadb-pvc.yml and mariadb-deploy.yml to customize as per server IP, replace the nfs path with your mariadb nfs path, replace 'jegan' with your name.
+```
+cd ~/openshift-april-2024
+git pull
+cd Day2/persistent-volumes-and-claims/
+
+oc apply -f mariadb-pv.yml
+oc apply -f mariadb-pvc.yml
+oc apply -f mariadb-deploy.yml
+
+oc get po -w
+```
+
+You can get inside the mariadb po shell, when prompts for password type 'root@123'
+```
+mysql -u root -p
+SHOW DATABASES;
+CREATE DATABASE tektutor;
+USE tektutor;
+CREATE TABLE training ( id INT NOT NULL, name VARCHAR(250) NOT NULL, duration VARCHAR(250) NOT NULL, PRIMARY KEY(id));
+
+INSERT INTO training VALUES ( 1, "DevOps", "5 Days" );
+INSERT INTO training VALUES ( 2, "OpenShift", "5 Days" );
+INSERT INTO training VALUES ( 3, "Microservices", "5 Days" );
+
+SELECT * FROM training;
+
+exit
+exit
+```
+
+![mariadb](mariadb-1.png)
+![mariadb](mariadb-2.png)
+
+
+## Lab - Connecting to mariadb po from linux terminal
+```
+oc project jegan
+oc get po
+oc rsh pod/mariadb-8469c94c8b-m4gmj
+
+```
+
+Expected output
+<pre>
+[root@tektutor.org persistent-volumes-and-claims]# oc project jegan
+Already on project "jegan" on server "https://api.ocp4.tektutor.org.labs:6443".
+[root@tektutor.org persistent-volumes-and-claims]# 
+  
+[root@tektutor.org persistent-volumes-and-claims]# oc get po
+NAME                       READY   STATUS    RESTARTS   AGE
+mariadb-8469c94c8b-m4gmj   1/1     Running   0          13m
+nginx-57fb4c94dc-2qj52     1/1     Running   0          69s
+nginx-57fb4c94dc-7fpk6     1/1     Running   0          69s
+nginx-57fb4c94dc-knmk7     1/1     Running   0          69s
+  
+[root@tektutor.org persistent-volumes-and-claims]# oc rsh pod/mariadb-8469c94c8b-m4gmj
+$ mysql -u root -p
+mysql: Deprecated program name. It will be removed in a future release, use '/opt/bitnami/mariadb/bin/mariadb' instead
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 4
+Server version: 11.3.2-MariaDB Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| tektutor           |
+| test               |
++--------------------+
+6 rows in set (0.002 sec)
+
+MariaDB [(none)]> exit        
+Bye
+$ exit  
+</pre>
