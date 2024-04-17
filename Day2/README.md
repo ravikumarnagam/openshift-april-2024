@@ -463,3 +463,55 @@ exit
 
 ![mariadb](mariadb-1.png)
 ![mariadb](mariadb-2.png)
+
+
+## Lab - Connecting to mariadb po from linux terminal
+```
+oc project jegan
+oc get po
+oc rsh pod/mariadb-8469c94c8b-m4gmj
+
+```
+
+Expected output
+<pre>
+[root@tektutor.org persistent-volumes-and-claims]# oc project jegan
+Already on project "jegan" on server "https://api.ocp4.tektutor.org.labs:6443".
+[root@tektutor.org persistent-volumes-and-claims]# 
+  
+[root@tektutor.org persistent-volumes-and-claims]# oc get po
+NAME                       READY   STATUS    RESTARTS   AGE
+mariadb-8469c94c8b-m4gmj   1/1     Running   0          13m
+nginx-57fb4c94dc-2qj52     1/1     Running   0          69s
+nginx-57fb4c94dc-7fpk6     1/1     Running   0          69s
+nginx-57fb4c94dc-knmk7     1/1     Running   0          69s
+  
+[root@tektutor.org persistent-volumes-and-claims]# oc rsh pod/mariadb-8469c94c8b-m4gmj
+$ mysql -u root -p
+mysql: Deprecated program name. It will be removed in a future release, use '/opt/bitnami/mariadb/bin/mariadb' instead
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 4
+Server version: 11.3.2-MariaDB Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| tektutor           |
+| test               |
++--------------------+
+6 rows in set (0.002 sec)
+
+MariaDB [(none)]> exit        
+Bye
+$ exit  
+</pre>
