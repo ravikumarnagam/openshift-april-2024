@@ -10,8 +10,8 @@ import java.sql.*;
 public class Hello {
 
 	public String readGreetingMsgFromDB() {
-	   //String url = "jdbc:mysql://localhost:3306/tektutor";
 	   String url = System.getenv("jdbc-url");
+	   //String url = "jdbc:mysql://localhost:3306/tektutor";
            String username = ""; 
            String password = "";
            String query = "select * from greeting"; 
@@ -20,8 +20,8 @@ public class Hello {
 
 	   try {
 
-		//Class.forName("com.mysql.cj.jdbc.Driver"); 
                 Class.forName(System.getenv("jdbc-connection")); 
+		//Class.forName("com.mysql.cj.jdbc.Driver");
 
 		username = System.getenv("username");
 		password = System.getenv("password");
