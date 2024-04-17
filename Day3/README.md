@@ -60,3 +60,5 @@ git pull
 cd Day3/wordpress
 ./deploy.sh
 ```
+
+You can access the wordpress from Developer Context --> Topology and click on the route(up arrow) that appears on the wordpress deployment.  You are supposed to see the wordpress blog page.
