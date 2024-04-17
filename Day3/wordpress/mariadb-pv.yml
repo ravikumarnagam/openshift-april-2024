@@ -12,7 +12,7 @@ spec:
   - ReadWriteMany # All the Pods from the same Node can only access this PV
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: 192.168.1.108 # Replace this IP with your Server IP 10.10.15.105 or 10.10.15.106 or 10.10.15.107 
+    server: 192.168.1.108 # Replace this IP with your Server IP 10.10.15.60 or 10.10.15.6e or 10.10.15.64 
                           # depending on which server you are connected 
     path: /var/nfs/jegan/mariadb # Replace this path with /var/nfs/user01/mariadb folder
       

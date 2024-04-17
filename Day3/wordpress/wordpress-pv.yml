@@ -12,5 +12,5 @@ spec:
   - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: 192.168.1.108 # Replace this IP with your CentOS IP
-    path: /var/nfs/jegan/wordpress # Replace this path with /mnt/nfs/user1/wordpress folder, replace user1 with your centos username 
+    server: 192.168.1.108 # Replace this IP with your CentOS IP 10.10.15.60 or 10.10.15.63 or 10.10.15.64
+    path: /var/nfs/jegan/wordpress # Replace this path with /var/nfs/user01/wordpress folder, replace user01 with your centos username 
