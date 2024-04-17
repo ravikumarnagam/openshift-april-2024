@@ -440,3 +440,7 @@ oc apply -f mariadb-deploy.yml
 
 oc get po -w
 ```
+
+You can get inside the mariadb po shell
+![mariadb](mariadb-1.png)
+![mariadb](mariadb-2.png)
