@@ -16,6 +16,13 @@
     - in new version of K8s and OpenShift, it is recommended to use Deployment over the DeploymentConfig
   - ReplicationController and Deploymentconfig are deprecated in Openshift but exists for backward compatibility
 
+## Installing Helm Kubernetes/OpenShift Package Manager
+```
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+```
+
 # Bonus Labs (Optional - not in our training agenda)
 
 ## Lab - In case you are curious to see how does the etcd key/value data-store stores the data in openshift
