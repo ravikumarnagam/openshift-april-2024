@@ -18,19 +18,32 @@ cd openshift-april-2024
 - The last two digit number in the username would vary for each participant.
 ```
 
+
 ## About our lab environment
+- OnPrem Production grade Red Hat OpenShift setup 
+- System Configuration
+  - 48 virtual cores
+  - 755 GB RAM
+  - 17 TB HDD Storage
+- CentOS 7.9.2009 64-bit OS
+- KVM Hypervisor
+- 7 Virtual machines
+  - Master 1 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
+  - Master 2 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
+  - Master 3 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
+  - Worker 1 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
+  - Worker 2 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
+  - HAProxy Load Balancer Virtual Machine
+  - One more VM created/destroyed during Openshift installation (BootStrap Virtual Machine)
+- Linux Server 1 ( 10.10.15.60 ) - Openshift cluster 1 ( 9 participants - user01 thru user09 )
+- Linux Server 2 ( 10.10.15.63 ) - Openshift cluster 2 ( 8 participants - user10 thru user17 )
+- Linux Server 3 ( 10.10.15.64 ) - openshift cluster 3 ( 8 participants - user18 thru user25 )
 
-There are total 3 linux servers
-```
-Server 1 - 10.10.15.60 (user01 - user09)
-Server 2 - 10.10.15.63 (user10 - user17)
-Server 3 - 10.10.15.64 (user18 - user25)
-```
+- In case you RPS cloud login username is 24MAN0113-u01, then you should login to your respective Linux server as user01 with password 'redhat' to the Server 1 (10.10.15.60).
 
-The linux login credentials ( RDP Connection link that you see on the RPS Windows cloud machine )
-In case your cloud login username is 24MAN0113-u25, then you should login as user25 with password redhat to the Server 3 (10.10.15.64).
-In case you cloud login username 24MAN0113-u15, then you should login as user15 with password 'redhat' to the server 2 (10.10.15.63).
+- In case you cloud login username 24MAN0113-u15, then you should login as user15 with password 'redhat' to the Server 2 (10.10.15.63).
 
+- In case your RPS cloud login username is 24MAN0113-u25, then you should login to your respective Linux server as user25 with password 'redhat' to the Server 3 (10.10.15.64).
 
 ## Pre-test - kindly complete the pre-test from your RPS Lab machine
 <pre>
