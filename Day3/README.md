@@ -14,7 +14,7 @@ etcdctl get "/kubernetes.io/deployments/jegan/mariadb" --prefix=true
 etcdctl get "/kubernetes.io/pods/jegan/mariadb-8469c94c8b-tf65s" --prefix=true
 ```
 
-## Lab - Deploying a multipod java application that fetch data from mariadb databases
+## Lab - Deploying a multipod java application that fetch data from mariadb database
 ```
 cd ~/openshift-april-2024
 git pull
