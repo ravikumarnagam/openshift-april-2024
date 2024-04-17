@@ -49,3 +49,14 @@ Now you should be able to access the openshift helloms route from cli or web bro
 oc get route
 curl http://openshift-hello-ms-jegan.apps.ocp4.tektutor.org.labs
 ```
+
+## Lab - Deploying multipod wordpress application
+You need to update mariadb-pv.yml, mariadb-pvc.yml, mariadb-deploy.yml, wordpress-pv.yml wordpress-pvc.yml and wordpress-deploy.yml before applying.
+
+```
+cd ~/openshift-april-2024
+git pull
+
+cd Day3/wordpress
+./deploy.sh
+```
