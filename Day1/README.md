@@ -34,7 +34,7 @@ cd openshift-april-2024
   - Worker 1 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
   - Worker 2 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
   - HAProxy Load Balancer Virtual Machine
-  - One more VM created/destroyed during Openshift installation (BootStrap Virtual Machine)
+  - One more VM is created and destroyed during Openshift installation (BootStrap Virtual Machine)
 - Linux Server 1 ( 10.10.15.60 ) - Openshift cluster 1 ( 9 participants - user01 thru user09 )
 - Linux Server 2 ( 10.10.15.63 ) - Openshift cluster 2 ( 8 participants - user10 thru user17 )
 - Linux Server 3 ( 10.10.15.64 ) - openshift cluster 3 ( 8 participants - user18 thru user25 )
