@@ -29,5 +29,5 @@ spec:
         - name: MARIADB_ROOT_PASSWORD
           valueFrom: 
             secretKeyRef:
-              name: mysql-login-credentials
+              name: mariadb-login-credentials
               key: password
