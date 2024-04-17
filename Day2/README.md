@@ -429,6 +429,8 @@ For more details on the PersistentVolume and PersistentVolumeClaim accessmode, y
 https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes  
 </pre>
 
+
+Before you create the below resources, you need to edit mariadb-pv.yml mariadb-pvc.yml and mariadb-deploy.yml to customize as per server IP, replace the nfs path with your mariadb nfs path, replace 'jegan' with your name.
 ```
 cd ~/openshift-april-2024
 git pull
@@ -442,5 +444,9 @@ oc get po -w
 ```
 
 You can get inside the mariadb po shell
+```
+mysql -u root -p
+```
+
 ![mariadb](mariadb-1.png)
 ![mariadb](mariadb-2.png)
