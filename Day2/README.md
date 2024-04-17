@@ -423,6 +423,12 @@ curl http://tektutor.apps.ocp4.rpsconsulting.in/hello
 - The application deploying that refers the PVC can make use of the external storage by mentioning the PVC name
 
 ## Lab - Deploying mariab with Persistent Volume and Claims
+
+For more details on the PersistentVolume and PersistentVolumeClaim accessmode, you may refer the official documentation 
+<pre>
+https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes  
+</pre>
+
 ```
 cd ~/openshift-april-2024
 git pull
