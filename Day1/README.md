@@ -336,6 +336,14 @@ cat ~/.kube/config
 - RHCOS also reserves many Ports for the internal use of Openshift
 - User applications will not have write access to certain reserved folders, user applications are allowed to perform things as non-admin users only, only certain special applications will have admin/root access
 
+### Points to remember
+- Red Hat Openshift uses RedHat Enterprise Linux Core OS
+- RHCOS has many restrictions or insists best practises
+- RHEL Core OS reserves ports under 1024 for its internal use
+- Many folders within the OS is made as ready only
+- Any application Pod attempts to perform write operation on those restricted folders will not be allowed to run
+- For detailed documentation, please refer official documentation here https://docs.openshift.com/container-platform/4.8/architecture/architecture-rhcos.html
+- 
 ## Info - What is a Pod?
 - a collection one or more containers that runs in the same openshift node
 - one or more Pods represents a single application
