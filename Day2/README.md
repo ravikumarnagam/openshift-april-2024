@@ -16,6 +16,8 @@ oc -n openshift-console get pods -o wide -w
 oc -n openshifconsole get service
 
 oc get route --all-namespaces | grep console
+
+oc describe console -n openshift-console
 ```
 
 <pre>
