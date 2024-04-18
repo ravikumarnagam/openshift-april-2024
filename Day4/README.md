@@ -243,12 +243,22 @@ which openssl
 openssl version
 ```
 
-Let's deploy a microservice and create an edge route as shown below
+Let's deploy a microservice and create an edge route as shown below.
+
+First, let's generate a private key
 ```
 openssl genrsa -out key.key
-openssl req -new -key key.key -out csr.csr -subj="/CN=hello-jegan.apps.ocp.tektutor-ocp-labs"
+```
+
+We need to create a public key using the private key with specific with your organization domain
+```
+openssl req -new -key key.key -out csr.csr -subj="/CN=hello-jegan.apps.ocp.tektutor.org.labs"
+```
+
+Sign the public key using the private key and generate certificate(.crt)
+```
 openssl x509 -req -in csr.csr -signkey key.key -out crt.crt
-oc create route edge --service spring-ms --hostname hello-jegan.apps.ocp4.training.tektutor --key key.key --cert crt.crt
+oc create route edge --service spring-ms --hostname hello-jegan.apps.ocp4.tektutor.org.labs --key key.key --cert crt.crt
 ```
 
 Expected output
@@ -265,21 +275,21 @@ nginx       ClusterIP   172.30.16.165   <none>        8080/TCP   4s
 spring-ms   ClusterIP   172.30.208.33   <none>        8080/TCP   87m
 
 [jegan@tektutor.org edge-route]$ oc get ingresses.config/cluster -o jsonpath={.spec.domain}
-apps.ocp4.training.tektutor
+apps.ocp4.tektutor.org.labs
   
 [jegan@tektutor.org edge-route]$ oc project
-Using project "jegan-devops" on server "https://api.ocp4.training.tektutor:6443".
+Using project "jegan-devops" on server "https://api.ocp4.tektutor.org.labs:6443".
   
-[jegan@tektutor.org edge-route]$ openssl req -new -key key.key -out csr.csr -subj="/CN=nginx-jegan-devops.apps.ocp4.training.tektutor"
+[jegan@tektutor.org edge-route]$ openssl req -new -key key.key -out csr.csr -subj="/CN=nginx-jegan-devops.apps.ocp4.tektutor.org.labs"
   
 [jegan@tektutor.org edge-route]$ openssl x509 -req -in csr.csr -signkey key.key -out crt.crt
   
-[jegan@tektutor.org edge-route]$ oc create route edge --service nginx --hostname nginx-jegan-devops.apps.ocp4.training.tektutor --key key.key --cert crt.crt
+[jegan@tektutor.org edge-route]$ oc create route edge --service nginx --hostname nginx-jegan-devops.apps.ocp4.tektutor.org.labs --key key.key --cert crt.crt
 route.route.openshift.io/nginx created
   
 [jegan@tektutor.org edge-route]$ oc get route
 NAME    HOST/PORT                                        PATH   SERVICES   PORT    TERMINATION   WILDCARD
-nginx   nginx-jegan-devops.apps.ocp4.training.tektutor          nginx      <all>   edge          None
+nginx   nginx-jegan-devops.apps.ocp4.tektutor.org.labs   nginx      <all>   edge          None
 </pre>
 
 ## Lab - Scheduling pods matching a specific node criteria
