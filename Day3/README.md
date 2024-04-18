@@ -100,7 +100,6 @@ INSERT INTO greeting VALUES ( "Hello Microservice 1.0 !" );
 SELECT * FROM greeting;
 ```
 
-
 Now you should be able to access the openshift helloms route from cli or web browser.  You need to use your route url which might look like http://openshift-hello-ms-<your-name>.apps.ocp4.rpsconsulting.in
 ```
 oc get route
@@ -397,7 +396,7 @@ hello-microservice-7dd969c847-6gvsg   0/1     ImagePullBackOff   0          17s
 hello-microservice-7dd969c847-6gvsg   0/1     ErrImagePull       0          31s  
 </pre>
 
-In order to download container image from our private JFrog Container Image registry, we need provide login credentials.  These login credentials we can save in a Openshift secret as shown below
+In order to download container image from our private JFrog Container Image registry, we need to provide login credentials.  These login credentials we can save in an Openshift secret as shown below
 ```
 oc create secret docker-registry private-jfrog-image-registry --docker-server=tektutor.jfrog.io --docker-username=<replace-this-with-your-jfrog-user-login> --docker-password=<replace-this-with-your-jfrog-access-token>
 
