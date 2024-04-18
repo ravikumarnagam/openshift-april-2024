@@ -422,6 +422,8 @@ cd ~/openshift-april-2024
 git pull
 cd Day3/spring-ms
 oc apply -f hello-microservice-deploy.yml
+oc apply -f hello-microservice-svc.yml
+oc apply -f hello-microservice-route.yml
 
 oc get po -w
 ```
