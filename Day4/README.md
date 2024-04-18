@@ -215,7 +215,7 @@ Expected output
 apps.ocp.tektutor.org.labs	
 </pre>
 
-Install the openssl from source code
+Installing openssl from source code ( Already installed on Lab machines, so kindly skip this installation)
 ```
 sudo yum -y remove openssl openssl-devel
 sudo yum groupinstall 'Development Tools'
