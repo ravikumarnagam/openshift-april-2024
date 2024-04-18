@@ -3,6 +3,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: redis-pvc-jegan # Replace 'jegan' with your name
 spec:
+  selector:
+    matchLabels:
+      name: jegan # Replace 'jegan' with your name
+      app: redis
   accessModes:
   - ReadWriteOnce
   volumeMode: Filesystem

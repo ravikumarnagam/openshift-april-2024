@@ -3,6 +3,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: mongodb-pvc-jegan # Replace 'jegan' with your name
 spec:
+  selector:
+    matchLabels:
+      name: jegan # Replace 'jegan' with your name
+      app: mongo
   accessModes:
   - ReadWriteOnce
   volumeMode: Filesystem

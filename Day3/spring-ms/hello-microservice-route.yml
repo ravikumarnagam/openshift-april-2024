@@ -3,13 +3,13 @@ kind: Route
 metadata:
   creationTimestamp: null
   labels:
-    app: hello
-  name: hello
+    app: hello-microservice
+  name: hello-microservice
 spec:
   port:
     targetPort: 8080
   to:
     kind: ""
-    name: hello
+    name: hello-microservice
     weight: null
 status: {}
