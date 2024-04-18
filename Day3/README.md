@@ -203,3 +203,10 @@ spec:
       - image: bitnami/nginx:latest
         name: nginx
 </pre>
+
+## Setup your trial JFrog Artifactory to configure OpenShift Private Container Registry
+```
+https://jfrog.com/start-free/
+```
+
+With your gmail, you can create 14 days trial.
