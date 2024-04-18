@@ -219,19 +219,19 @@ Install the openssl from source code
 ```
 sudo yum -y remove openssl openssl-devel
 sudo yum groupinstall 'Development Tools'
-sudo yum install perl-IPC-Cmd perl-Test-Simple
+sudo yum install perl-IPC-Cmd perl-Test-Simple -y
 cd /usr/src
 wget https://www.openssl.org/source/openssl-3.0.0.tar.gz
 tar -zxf openssl-3.0.0.tar.gz
 rm openssl-3.0.0.tar.gz
-dnf install perl
 cd /usr/src/openssl-3.0.0
 ./config
 make
 make test
 make install
-ln -s /usr/local/lib64/libssl.so.3 /usr/lib64/libssl.so.3
-ln -s /usr/local/lib64/libcrypto.so.3 /usr/lib64/libcrypto.so.3
+
+sudo ln -s /usr/local/lib64/libssl.so.3 /usr/lib64/libssl.so.3
+sudo ln -s /usr/local/lib64/libcrypto.so.3 /usr/lib64/libcrypto.so.3
 
 sudo ldconfig
 sudo tee /etc/profile.d/openssl.sh<<EOF
@@ -239,7 +239,7 @@ export PATH=/usr/local/openssl/bin:\$PATH
 export LD_LIBRARY_PATH=/usr/local/openssl/lib:/usr/local/openssl/lib64:\$LD_LIBRARY_PATH
 EOF
 
-openssl version
+which openssl
 openssl version
 ```
 
