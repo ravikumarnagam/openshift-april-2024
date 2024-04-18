@@ -402,3 +402,24 @@ Finally, let's clean up the pod
 oc delete -f required-affinity.yml
 oc label node worker-2.ocp.tektutor.org.labs disk-
 ```
+
+## Info - What is a Storage Class in Kubernetes/OpenShift?
+- Normally when application needs external storage they request openshift via Persistent Volume Claim(PVC)
+- For a PVC to get an external there has to a corresponding matching Persistent Volume whose size, accessmode, storageclass(if any) should match
+- In case, openshift doesn't find a PV to satify the PVC request, then the Pod that depends on the PVC will be in the Pending until it gets one Persistent Volume
+- Persistent volumes can be provisioned
+  - Manually
+  - Dynamically using Storage Class
+- We can create different types of Storage
+  - AWS EBS
+  - Azure Disk
+  - NFS, etc.,
+
+  ## Lab - Using NFS Storage Class to dynamically provision Persistent Volumes
+  ```
+  cd ~/openshift-april-2024
+  git pull
+
+  cd Day4/nfs-storage-class
+  ./deploy.sh
+  ```
