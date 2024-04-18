@@ -19,18 +19,30 @@ cd openshift-april-2024
 ```
 
 ## About our lab environment
+- OnPrem Production grade Red Hat OpenShift setup 
+- System Configuration
+  - 48 virtual cores
+  - 755 GB RAM
+  - 17 TB HDD Storage
+- CentOS 7.9.2009 64-bit OS
+- KVM Hypervisor
+- 7 Virtual machines
+  - Master 1 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
+  - Master 2 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
+  - Master 3 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
+  - Worker 1 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
+  - Worker 2 with RHEL Core OS ( 8 Cores, 128GB RAM, 500 GB HDD )
+  - HAProxy Load Balancer Virtual Machine
+  - One more VM is created and destroyed during Openshift installation (BootStrap Virtual Machine)
+- Linux Server 1 ( 10.10.15.60 ) - Openshift cluster 1 ( 9 participants - user01 thru user09 )
+- Linux Server 2 ( 10.10.15.63 ) - Openshift cluster 2 ( 8 participants - user10 thru user17 )
+- Linux Server 3 ( 10.10.15.64 ) - openshift cluster 3 ( 8 participants - user18 thru user25 )
 
-There are total 3 linux servers
-```
-Server 1 - 10.10.15.60 (user01 - user09)
-Server 2 - 10.10.15.63 (user10 - user17)
-Server 3 - 10.10.15.64 (user18 - user25)
-```
+- In case you RPS cloud login username is 24MAN0113-u01, then you should login to your respective Linux server as user01 with password 'redhat' to the Server 1 (10.10.15.60).
 
-The linux login credentials ( RDP Connection link that you see on the RPS Windows cloud machine )
-In case your cloud login username is 24MAN0113-u25, then you should login as user25 with password redhat to the Server 3 (10.10.15.64).
-In case you cloud login username 24MAN0113-u15, then you should login as user15 with password 'redhat' to the server 2 (10.10.15.63).
+- In case you cloud login username 24MAN0113-u15, then you should login as user15 with password 'redhat' to the Server 2 (10.10.15.63).
 
+- In case your RPS cloud login username is 24MAN0113-u25, then you should login to your respective Linux server as user25 with password 'redhat' to the Server 3 (10.10.15.64).
 
 ## Pre-test - kindly complete the pre-test from your RPS Lab machine
 <pre>
@@ -324,11 +336,20 @@ cat ~/.kube/config
 - RHCOS also reserves many Ports for the internal use of Openshift
 - User applications will not have write access to certain reserved folders, user applications are allowed to perform things as non-admin users only, only certain special applications will have admin/root access
 
+### Points to remember
+- Red Hat Openshift uses RedHat Enterprise Linux Core OS
+- RHCOS has many restrictions or insists best practises
+- RHEL Core OS reserves ports under 1024 for its internal use
+- Many folders within the OS is made as ready only
+- Any application Pod attempts to perform write operation on those restricted folders will not be allowed to run
+- For detailed documentation, please refer official documentation here https://docs.openshift.com/container-platform/4.8/architecture/architecture-rhcos.html
+- 
 ## Info - What is a Pod?
 - a collection one or more containers that runs in the same openshift node
 - one or more Pods represents a single application
 - this is the smallest unit that can be deployed into Kubernetes/OpenShift
 - IP addresses are assigned only on the Pod level, hence all containers that are part of the same Pod will have the same IP
+- 
 ## Info - What is a ReplicaSet?
 - ReplicaSet is a collection of one or more Pods
 - each ReplicaSet represents a single version of some application Pods
@@ -349,9 +370,22 @@ cat ~/.kube/config
 - Rolling update is supported by Deployment
   
 ## Getting inside master-1 node shell from Red Hat OpenShift web console
-
 ![master-node](openshift-1.png)
 
+## Info - OpenShift states
+https://access.redhat.com/documentation/en-us/openshift_container_platform/4.8/html/nodes/working-with-clusters#nodes-containers-events-list_nodes-containers-events
+
+## Info - Pod Lifecycle
+- Pending - Container image gets downloads or there are no Persistent Volume to bound and claim them
+- Running - The Pod is scheduled to a node and all containers in the Pod are up and running
+- Succeeded - All containers in the Pod have terminated succesfully and not be restarted
+- Failed - All containers in the Pod have terminated but one or more containers terminated with non-zero status or was terminated by Openshift
+- Unknown - For some reason, the state of the Pod could not be obtained may be there is some problem in communicating to the node where the Pod is running
+
+## Info - Container Lifecycle
+- Waiting - pulling the container image
+- Running - container is running without issues
+- Terminated - container in the Terminated state began execution and then either ran to completion or failed for some reason
 
 ## Lab - Finding more details about an openshift node
 ```

@@ -77,7 +77,7 @@ openshift-console          downloads                 downloads-openshift-console
 
 ## Lab - Deploying an application into openshift using declarative style(using yaml files)
 
-Kubernetes/Openshift supports deploying and managing application in two style
+Kubernetes/Openshift supports deploying and managing application in two styles
 1. Imperative style ( using commands )
 2. Using source code/manifest files(yaml files)
 
@@ -399,38 +399,44 @@ curl http://tektutor.apps.ocp4.rpsconsulting.in/hello
   - Server 1 (10.10.15.60) has its own NFS Server (user01 to user09)
   - Server 2 (10.10.15.63) has its own NFS Server (user10 to user17)
   - Server 3 (10.10.15.64) has its own NFS Server (user18 to user25)
-- You can list the NFS shared folder with the command
+- You can list the NFS shared folder for your linux user as shown below in the linux terminal
   ```
   showmount -e | grep user01
   showmount -e | grep user18
   showmount -e | grep user25
   ```
-- Persistent volume we create in Openshift will be making use of NFS Shared folders
-- Persistent Volume normally will have the below attributes
-  - Size in MB/GB/TB/MiB/GiB/TiB
-  - AccessMode - ReadWriteOnce, ReadWriteMany, etc
+- Persistent volumes we create in Openshift will be making use of NFS Shared folders
+- Persistent Volumes normally will have the below attributes
+  - Capacity/Size in MB/GB/TB/MiB/GiB/TiB
+  - AccessMode - ReadOnlyOnce,ReadWriteOnce, ReadWriteOnce, ReadWriteMany, etc
   - StorageClass - optional ( NFS, AWS, Azure, etc.,)
   - Label selector - optional
+
+- Access Mode
+  - ReadOnlyOnce - means all the Pods from a single Node in Openshift cluster can read the Persistent Volume
+  - ReadOnlyMany - means all the Pods from any Node in Openshift cluster can read the Persistent Volume
+  - ReadWriteOnce - means all the Pods from a single Node in Openshift cluster can read/write the Persistent Volume
+  - ReadWriteMany - means all the Pods from multiple Nodes in Openshift cluster can read/write the Persistent Volume
     
 ## Info - What is Persistent Volume Claim (PVC)?
-- any application that runs in Openshift/Kubernetes if they need external storage they have to request the openshift cluster by creating Persistent volume claims (PVC)
+- any application that runs in Openshift/Kubernetes, if they need external storage they have to request the openshift cluster by creating Persistent volume claims (PVC)
 - When application request for external storage by creating PVC, the PVC will also mention the below attributes
   - Size
   - AccessMode
   - StorageClass - optional
   - Label selector - optional
-- If openshift storage controller finds a matching Persistent Volume, then it will let the PVC claim and use the Persistent Volume
-- The application deploying that refers the PVC can make use of the external storage by mentioning the PVC name
-
-## Lab - Deploying mariab with Persistent Volume and Claims
+- If openshift storage controller finds a matching Persistent Volume, then it will let the PVC claim/bound and use the Persistent Volume
+- The application Deployment that refers the PVC can make use of the external storage by mentioning the PVC name and mount the Persistent volume to a specific mount point(folder in Pod)
 
 For more details on the PersistentVolume and PersistentVolumeClaim accessmode, you may refer the official documentation 
 <pre>
 https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes  
 </pre>
 
+## Lab - Deploying mariab with Persistent Volume and Claims
 
-Before you create the below resources, you need to edit mariadb-pv.yml mariadb-pvc.yml and mariadb-deploy.yml to customize as per server IP, replace the nfs path with your mariadb nfs path, replace 'jegan' with your name.
+Before you create the below resources, you need to edit mariadb-pv.yml mariadb-pvc.yml and mariadb-deploy.yml to customize as per your linux server IP, replace the nfs path with your mariadb nfs path, replace 'jegan' with your name.
+
 ```
 cd ~/openshift-april-2024
 git pull
@@ -443,7 +449,7 @@ oc apply -f mariadb-deploy.yml
 oc get po -w
 ```
 
-You can get inside the mariadb po shell, when prompts for password type 'root@123'
+You can get inside the mariadb pod shell, when prompts for password type 'root@123'
 ```
 mysql -u root -p
 SHOW DATABASES;
@@ -465,12 +471,12 @@ exit
 ![mariadb](mariadb-2.png)
 
 
-## Lab - Connecting to mariadb po from linux terminal
+## Lab - Connecting to mariadb pod from linux terminal
 ```
 oc project jegan
 oc get po
 oc rsh pod/mariadb-8469c94c8b-m4gmj
-
+exit
 ```
 
 Expected output
